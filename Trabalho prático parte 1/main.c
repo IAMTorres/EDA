@@ -7,28 +7,29 @@ int main()
 {
 	int machArray[10] = {1, 3};
 	int timehArray[10] = {4, 5};
-	int noperation = 1;
-	int nop=33;
+	int nprocess = 1;
+	int nop = 33;
 	// Lista ligada vazia
 	Process *process = NULL;
-	process = MallocProcessPlan(process);
+	// process = MallocProcessPlan(process);
 	process = InsertProcessPlan(process, 1);
-
+	process = InsertProcessPlan(process,2);
 
 	Operation *operation = NULL;
-	operation = MallocOperation(operation);
-	operation = InsertOperation(operation, process, noperation,pp);
-	printf("Insira PP");
-	printf("Insira Operation");
-	printf("Insira Maquina");
-	int processo = 1;
-	int maquina = 1;
-	int operacao = 1;
-	int pc = 111;
-	int time = 222;
-	Machine *machine = NULL;
-	machine = MallocMachine(machine);
-	InsertMachine(process, processo, maquina, operacao, pc, time);
-	Showlist(process);
+	// operation = MallocOperation(operation);
+	operation = InsertOperation(operation, process, nprocess, nop);
+	/*	printf("Insira PP");
+		printf("Insira Operation");
+		printf("Insira Maquina");
+		int processo = 1;
+		int maquina = 1;
+		int operacao = 1;
+		int pc = 111;
+		int time = 222;
+		Machine *machine = NULL;
+		machine = MallocMachine(machine);
+		InsertMachine(process, processo, maquina, operacao, pc, time);
 
+	*/
+	Showlist(process);
 }

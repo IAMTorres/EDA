@@ -5,19 +5,20 @@
 
 Process *MallocProcessPlan(Process *prs)
 {
-    printf("MAlloc process plan"); // Debug
+    printf("MAlloc process plan\n"); // Debug
     prs = (Process *)malloc(sizeof(Process));
     return (prs);
 }
 
 Process *InsertProcessPlan(Process *prs, int nnp)
 {
-
-    if (prs != NULL)
+    Process *prsobj = MallocProcessPlan(prs);
+    if (prsobj != NULL)
     {
-        prs->npp = nnp;
-        prs->op = NULL;
-        prs->next = NULL;
+        prsobj->npp = nnp;
+        prsobj->op = NULL;
+        prsobj->next = prs;
+        return (prsobj);
     }
     else
         return (prs);
@@ -27,7 +28,7 @@ void Showlist(Process *prs)
 {
     Operation *op = NULL;
     Machine *mch = NULL;
-    printf("entrou");
+    printf("\nentrou showlist\n");
     while (prs != NULL)
     {
         printf("Number npp: %d\n", prs->npp);
@@ -49,50 +50,38 @@ void Showlist(Process *prs)
 
 Operation *MallocOperation(Operation *op)
 {
-    printf("MAlloc operações"); // Debug
+    printf("MAlloc operações inicio"); // Debug
     op = (Operation *)malloc(sizeof(Operation));
     return (op);
+    printf("MAlloc operações fim");
 }
 
 Operation *InsertOperation(Operation *op, Process *prs, int nprocess, int nop)
-{
-    op = MallocOperation(op);
+{ printf("\n %p %d  ",op, prs->npp);
+    printf("\ninserto before malloc\n");
+   // Operation *opobj = MallocOperation(op);
+  
+    Operation *opobj = (Operation *)malloc(sizeof(Operation));
     printf("InsertOperation entrou"); // debug
     while (prs != NULL)
     {
         if (nprocess = prs->npp)
         {
-            op = prs->next;
-            while (op!=NULL)
-            {
-                =MallocOperation(Operation *op)
+            while (op != NULL)
 
-        
-                Objeto* inserirObjeto(Objeto * lista, char nome[], float d)
-{Objeto *obj = (Objeto*) malloc(sizeof(Objeto));
-
- if (obj!=NULL)
- {strcpy(obj->nome,nome);
-  obj->dist = d;
-  obj->seguinte = lista;
-  return(obj);
- }
- else return(lista);
-}
-
-
-
-
-
-                
-            }
-            
-                printf("if nprocess == prs->npp\n");
-                prs->op = op;
-                op->machine = NULL;
-                // InsertMachine();
+                if (opobj != NULL)
+                {
+                    opobj->machine = NULL;
+                    opobj->noperation = nop;
+                    opobj->next = op;
+                }
+                else
+                    return (op);
         }
     }
+
+    // InsertMachine();
+
     return op;
 }
 Machine *MallocMachine(Machine *mch)
