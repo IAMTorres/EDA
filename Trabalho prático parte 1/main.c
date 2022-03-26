@@ -15,8 +15,38 @@
 
 int main()
 {
-	int machArray[10] = {1, 3};
-	int timehArray[10] = {4, 5};
+
+	FILE *fl = fopen("dados.txt", "rt");
+
+	char str[50];
+	char *pch;
+	int op;
+	if (fl != NULL)
+	{printf("-.------------------");
+		while (!feof(fl))
+		{
+			fscanf(fl, "%d\n", &op);
+			printf("%d\n", op);
+
+			fscanf(fl, "%s\n", str);
+			printf("%s\n", str);
+			pch = strtok(str, "[,]");
+			while (pch != NULL)
+			{
+				printf("%s\n", pch);
+				pch = strtok(NULL, "[,]");
+			}
+
+			fscanf(fl, "%s\n", str);
+			printf("%s\n", str);
+			pch = strtok(str, "(,)");
+			while (pch != NULL)
+			{
+				printf("%s\n", pch);
+				pch = strtok(NULL, "(,)");
+			}
+		}
+	}
 	int nprocess = 1;
 	int nop = 33;
 	int nop1 = 53;
@@ -39,8 +69,9 @@ int main()
 	int operacao = 1;
 	int pc = 111;
 	int time = 222;
-	Machine *machine = CreateMachine(pc, time);
-	process = InsertMachineOperationProcess(process, machine, nop, nprocess);
+	Machine *machineobj = CreateMachine(pc, time);
+	process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
+	Machine *machine = CreateMachine(12, 21);
+	process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
 	Showlist(process);
-
 }

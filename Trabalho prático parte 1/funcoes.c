@@ -41,21 +41,25 @@ Process *CreateProcessPlan(int npp)
  * @brief Junta o objeto á lista process
  *
  */
-Process *InsertProcessPlan(Process *prs, Process *process)
+Process *InsertProcessPlan(Process *prsobj, Process *process)
 {
-    if (prs != NULL)
+    if (prsobj != NULL)
     {
-        prs->op = NULL;
-        prs->next = process;
-        return (prs);
+        prsobj->op = NULL;
+        prsobj->next = process;
+        return (prsobj);
     }
     else
-        return (prs);
+        return (process);
 }
 
 #pragma endregion
 
-// Mostra todas as litas
+/**
+ * @brief  Mostra todas as litas
+ *
+ * @param prs
+ */
 void Showlist(Process *prs)
 {
 
@@ -69,15 +73,20 @@ void Showlist(Process *prs)
         op = auxprs->op;
         while (op != NULL)
         {
-            printf(" \nOperation: %p %d %p\n", op, op->noperation, op->next);
-            op = op->next;
+            printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
+            
+            
             mch = op->machine;
             while (mch != NULL)
             {
-                printf(" Machine: %d Time: %d\n", mch->pc, mch->time);
+                printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
                 mch = mch->next;
             }
+
+            op = op->next;
+            
         }
+       
 
         auxprs = auxprs->next;
     }
@@ -85,7 +94,7 @@ void Showlist(Process *prs)
 
 #pragma region OP
 
-Operation *CreateOperation(int nop)
+Operation *CreateOperation(int nOp)
 {
 
     printf("MAlloc operações inicio"); // Debug
@@ -93,7 +102,7 @@ Operation *CreateOperation(int nop)
 
     if (aux != NULL)
     {
-        aux->noperation = nop;
+        aux->noperation = nOp;
         aux->next = NULL;
         aux->machine = NULL;
         printf("create op %d %p", aux->noperation, aux->next);
@@ -151,7 +160,7 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
     while (auxprs != NULL)
     {
 
-        if (nprocess = auxprs->npp) // encontra o numero de processo igual
+        if (nprocess == auxprs->npp) // encontra o numero de processo igual
         {
             // dar next em op e adicionar o valor de op ao pp
 
@@ -161,6 +170,8 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
                 {
                     if (machine != NULL)
                     {
+                        machine->next = opaux->machine; 
+
                         Machine *aux = opaux->machine;
                         opaux->machine = machine;
                         machine->next = aux;
@@ -175,28 +186,6 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
     // InsertMachine();
     printf("%p -----", auxprs);
 
-    /*  Operation *op = NULL;
-      Machine *mch = NULL;
-      while (prs != NULL)
-      {
-          if (prs->npp = process)
-          {
-              prs->op = op;
-              while (op != NULL)
-              {
-                  if (op->noperation == operacao)
-                  {
-                      mch = MallocMachine(mch);
-                      op->machine = mch;
-                      mch->pc = pc;
-                      mch->time = time;
-                  }
-
-                  op = op->next;
-              }
-          }
-          prs = prs->next;
-      }*/
 }
 #pragma endregion
 #pragma endregion
