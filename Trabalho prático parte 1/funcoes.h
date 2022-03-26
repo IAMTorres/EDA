@@ -1,42 +1,53 @@
 /**
  * @file funcoes.h
  * @author GonçaloTorres (gon.im.torres@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-03-23
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//Lista de dados papra maquinas
-typedef struct _machine {      
+// Lista de dados papra maquinas
+typedef struct _machine
+{
 	int pc;
 	int time;
 	struct _machine *next;
-}Machine;
+} Machine;
 
-//Lista de dados papra operações e contem apontador para lista de maquinas
-typedef struct _op {
+// Lista de dados papra operações e contem apontador para lista de maquinas
+typedef struct _op
+{
 	int noperation;
 	Machine *machine;
 	struct _op *next;
-}Operation;
+} Operation;
 
-//Lista de dados papra processplan e contem apontador para lista de operações
-typedef struct _pp {
+// Lista de dados papra processplan e contem apontador para lista de operações
+typedef struct _pp
+{
 	int npp;
-	Operation *op;	      
+	Operation *op;
 	struct _pp *next;
-}Process;
+} Process;
 
 Process *CreateProcessPlan(int npp);
-Process *InsertProcessPlan(Process *prs,Process *Process);
+Process *InsertProcessPlan(Process *prs, Process *Process);
 Operation *CreateOperation(int nop);
-Process *InsertOperationProcess(Operation *op, Process *prs,int nprocess);
-Machine *CreateMachine(int pc,int time);
-Process *InsertMachineOperationProcess(Process *prs,Machine *mch,int nop,int nprocess);
+Process *InsertOperationProcess(Operation *op, Process *prs, int nprocess);
+Machine *CreateMachine(int pc, int time);
+Process *InsertMachineOperationProcess(Process *prs, Machine *mch, int nop, int nprocess);
+void RemoveOperation(Process *process, int opPrs, int opSubs);
 void Showlist(Process *prs);
+
+
+
+Machine *SearchMachine(Machine *mch);
+Operation *SearchOperation(Operation *op);
+
+

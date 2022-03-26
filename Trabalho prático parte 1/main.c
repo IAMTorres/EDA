@@ -15,26 +15,26 @@
 
 int main()
 {
-/*
-	FILE *fl = fopen("dados.txt", "rt");
-	char str[50];
-	char str1[50];
-	int machine[10];
-	int time[10];
-	char *pch;
-	char *pch1;
-	int op;
-	if (fl != NULL)
+	/*
+		FILE *fl = fopen("dados.txt", "rt");
+		char str[50];
+		char str1[50];
+		int machine[10];
+		int time[10];
+		char *pch;
+		char *pch1;
+		int op;
+		if (fl != NULL)
 
-		if (!feof(fl))
-		{
-			printf("\nentrou_____________-\n");
-			fscanf(fl, "%d;%[^;];%[^;]", &op, str, str1);
-			printf("ola %d %s %s",op,str, str1);
-			fclose(fl);
+			if (!feof(fl))
+			{
+				printf("\nentrou_____________-\n");
+				fscanf(fl, "%d;%[^;];%[^;]", &op, str, str1);
+				printf("ola %d %s %s",op,str, str1);
+				fclose(fl);
 
-		}
-*/
+			}
+	*/
 	int nprocess = 1;
 	int nop = 33;
 	int nop1 = 53;
@@ -62,4 +62,16 @@ int main()
 	Machine *machine = CreateMachine(12, 21);
 	process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
 	Showlist(process);
+	int opSubs;
+	int opPrs;
+
+	printf("\nInsira o processo a remover\nOperação:");
+	scanf(" %d", &opPrs);
+
+	printf("\nInsira a operação a remover\nOperação:");
+	scanf(" %d", &opSubs);
+
+	//RemoveOperation(process, opPrs, opSubs);
+
+
 }
