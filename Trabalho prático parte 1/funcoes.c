@@ -15,9 +15,101 @@
 #include "funcoes.h"
 #pragma endregion
 
-#pragma region Metodos
+#pragma region Metodosº
+
+Process *InsertData(Process *process, int nprocess, int nop, int pc, int time)
+{
+    Process *prs = CreateProcessPlan(nprocess);
+    process = InsertProcessPlan(prs, process);
+
+    Operation *operationobj = CreateOperation(nop);
+    process = InsertOperationProcess(operationobj, process, nprocess);
+
+    operationobj = CreateOperation(3);
+    process = InsertOperationProcess(operationobj, process, nprocess);
+
+    Machine *machineobj = CreateMachine(pc, time);
+    process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
+    Machine *machine = CreateMachine(12, 21);
+    process = InsertMachineOperationProcess(process, machine, 3, nprocess);
+}
+
+Process *ReadFile()
+{
+
+    FILE *fl = fopen("dados.txt", "rt");
+    char str[50];
+    char str1[50];
+    int machine[10];
+    int time[10];
+    char *pch;
+    char *pch1;
+    int op;
+    if (fl != NULL)
+
+        if (!feof(fl))
+        {
+            printf("\nentrou_____________-\n");
+            fscanf(fl, "%d;%[^;];%[^;]\n", &op, str, str1);
+            printf("ola %d %s %s", op, str, str1);
+            fclose(fl);
+            InsertData(process,nprocess, int nop, int pc, int time);
+        }
+}
+
+Process *SearchProcessPlan(Process *prs, int nProcess)
+{
+    Process *auxPrs = prs;
+
+    while (auxPrs != NULL)
+    {
+        if (nProcess == auxPrs->npp)
+        {
+            return auxPrs;
+        }
+        auxPrs = auxPrs->next;
+    }
+}
+
+Operation *SearchOperation(Operation *op, int nOperation)
+{
+    Operation *auxOp = op;
+    while (auxOp != NULL)
+    {
+        if (nOperation == auxOp->noperation)
+        {
+            return auxOp;
+        }
+        auxOp = auxOp->next;
+    }
+}
+Machine *SearchMachine(Machine *mch, int nMachine)
+{
+    Machine *auxMch = mch;
+    while (auxMch != NULL)
+    {
+        if (nMachine == auxMch->pc)
+        {
+            return auxMch;
+        }
+        auxMch = auxMch->next;
+    }
+}
+Machine *ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
+{
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    prs = SearchProcessPlan(process, nProcess);
+    prs->op = op;
+    op = SearchOperation(op, nOperation);
+    op->machine = mch;
+    mch = SearchMachine(mch, nMachine);
+    return mch;
+}
 
 #pragma region PP
+
 /**
  * @brief Create a Process Plan object
  *
@@ -62,29 +154,68 @@ Process *InsertProcessPlan(Process *prsobj, Process *process)
  */
 void Showlist(Process *prs)
 {
-
-    Process *auxprs = prs;
+    Process *auxPrs = prs;
     Operation *op = NULL;
     Machine *mch = NULL;
     printf("\nentrou showlist\n");
-    while (auxprs != NULL)
+    while (auxPrs != NULL)
     {
-        printf("\nNumber npp: %p %d %p\n", auxprs, auxprs->npp, auxprs->next);
-        op = auxprs->op;
-        op=SearchOperation(op);
+        printf("\nNumber npp: %p %d %p\n", auxPrs, auxPrs->npp, auxPrs->next);
+        op = auxPrs->op;
+        while (op != NULL)
+        {
             printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
 
             mch = op->machine;
-
-mch=SearchMachine(mch);
-            
+            while (mch != NULL)
+            {
                 printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
-                
-            
+                mch = mch->next;
+            }
 
-        
+            op = op->next;
+        }
 
-        auxprs = auxprs->next;
+        auxPrs = auxPrs->next;
+    }
+}
+
+int ShowOperation(Process *process, int prsSub, int opSub)
+{
+
+    Process *auxPrs = process;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    printf("\nentrou showOperation\n");
+    while (auxPrs != NULL)
+    {
+        if (prsSub == auxPrs->npp)
+        {
+            op = auxPrs->op;
+            while (op != NULL)
+            {
+                if (opSub == op->noperation)
+                {
+                    mch = op->machine;
+                    while (mch != NULL)
+                    {
+                        printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
+                        mch = mch->next;
+                        return 1;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+                op = op->next;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+        auxPrs = auxPrs->next;
     }
 }
 
@@ -122,70 +253,104 @@ Operation *CreateOperation(int nOp)
 Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
 {
 
-    Process *auxprs = prs;
+    Process *auxPrs = prs;
     Operation *opaux = prs->op;
 
     printf("InsertOperation entrou"); // debug
-    while (auxprs != NULL)
+    while (auxPrs != NULL)
     {
 
-        if (nprocess = auxprs->npp) // encontra o numero de processo igual
+        if (nprocess = auxPrs->npp) // encontra o numero de processo igual
         {
             // dar next em op e adicionar o valor de op ao pp
             if (opobj != NULL)
             {
                 Operation *aux = opaux;
-                auxprs->op = opobj;
+                auxPrs->op = opobj;
                 opobj->next = aux;
                 return prs;
             }
         }
-        auxprs = auxprs->next;
+        auxPrs = auxPrs->next;
     }
 }
 
-Operation *SearchOperation(Operation *op)
-{if(op!=NULL) {return op;
-    op=op->next;}
-    
+void RemoveOperation(Process *prs, int prsSubs, int opSubs)
+{
 
-}
-
-Machine *SearchMachine(Machine *mch) {
-    if(mch!=NULL){ return mch;
-    mch=mch->next;}
-}
-
-void RemoveOperation(Process *process, int opPrs, int opSubs)
-{/*
-
-    Objeto *removerObjeto(Objeto * lista, char nome[])
-
-        Objeto *nodoAtual = lista,
-               *nodoAnterior;
-    if (strcmp(nodoAtual->nome, nome) == 0)
+    Process *auxPrs = prs;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    while (auxPrs != NULL)
     {
-        lista = nodoAtual->seguinte;
-        free(nodoAtual);
-    }
-    else
-    {
-        nodoAnterior = lista;
-        nodoAtual = nodoAnterior->seguinte;
-        while ((nodoAtual != NULL) && (strcmp(nodoAtual->nome, nome) != 0))
+        printf("\n\n processo entrada %d", auxPrs->npp);
+        if (prsSubs == auxPrs->npp)
         {
-            nodoAnterior = nodoAtual;
-            nodoAtual = nodoAtual->seguinte;
+            op = auxPrs->op;
+            Operation *nodoAtual = op, *nodoAnterior;
+            printf("\n\n operacap entrada %d", op->noperation);
+            if (op->noperation == opSubs)
+            {
+                printf("entrou if");
+                op = nodoAtual->next;
+                free(nodoAtual);
+            }
+            else
+            {
+                nodoAnterior = op;
+                nodoAtual = nodoAnterior->next;
+                while ((nodoAtual != NULL) && (nodoAtual->noperation != opSubs))
+                {
+                    nodoAnterior = nodoAtual;
+                    nodoAtual = nodoAtual->next;
+                }
+                if (nodoAtual != NULL)
+                {
+                    nodoAnterior->next = nodoAtual->next;
+                    free(nodoAtual);
+                    Machine *mchRemove = nodoAtual->machine;
+                    Machine *auxRemoveMachine;
+                    while (mchRemove != NULL)
+                    {
+                        auxRemoveMachine = mchRemove;
+                        mchRemove = mchRemove->next;
+                        free(auxRemoveMachine);
+                    }
+                }
+                // return (lista);
+            }
+            break;
         }
-        if (nodoAtual != NULL)
-        {
-            nodoAnterior->seguinte = nodoAtual->seguinte;
-            free(nodoAtual);
-        }
+        auxPrs = auxPrs->next;
     }
-    return (lista);*/
 }
 
+void AlterarOperações(Process *prs, int prsSubs, int opSubs)
+{
+    Process *auxPrs = prs;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    printf("\nentrou showlist\n");
+    while (auxPrs != NULL)
+    {
+        op = auxPrs->op;
+        while (op != NULL)
+        {
+            printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
+
+            mch = op->machine;
+            while (mch != NULL)
+            {
+                printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
+                mch = mch->next;
+            }
+
+            op = op->next;
+        }
+
+        auxPrs = auxPrs->next;
+    }
+}
 #pragma endregion
 #pragma region MCH
 
@@ -203,14 +368,14 @@ Machine *CreateMachine(int pc, int time)
 
 Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, int nprocess)
 {
-    Process *auxprs = prs;
+    Process *auxPrs = prs;
     Operation *opaux = prs->op;
 
     printf("InsertOperation entrou"); // debug
-    while (auxprs != NULL)
+    while (auxPrs != NULL)
     {
 
-        if (nprocess == auxprs->npp) // encontra o numero de processo igual
+        if (nprocess == auxPrs->npp) // encontra o numero de processo igual
         {
             // dar next em op e adicionar o valor de op ao pp
 
@@ -231,10 +396,10 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
                 opaux = opaux->next;
             }
         }
-        auxprs = auxprs->next;
+        auxPrs = auxPrs->next;
     }
     // InsertMachine();
-    printf("%p -----", auxprs);
+    printf("%p -----", auxPrs);
 }
 #pragma endregion
 #pragma endregion
