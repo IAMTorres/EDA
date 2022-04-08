@@ -50,7 +50,7 @@ int main()
 	{
 
 		printf("\nInsira a opcao:\nOption:");
-		scanf(" %d", &option);
+		scanf("%d", &option);
 		switch (option)
 		{
 		case 1:
@@ -62,10 +62,10 @@ int main()
 			break;
 		case 2:
 			printf("\nInsira o processo a remover\nProcesso:");
-			scanf(" %d", &prsSub);
+			scanf("%d", &prsSub);
 
 			printf("\nInsira a operação a remover\nOperação:");
-			scanf(" %d", &opSub);
+			scanf("%d", &opSub);
 
 			RemoveOperation(process, prsSub, opSub);
 			printf("\n-----------------------------------------------------------------------------\n");
@@ -73,41 +73,49 @@ int main()
 			break;
 		case 3: // Alterar
 			int rtr = 0;
-			do
-			{
-				printf("\nInsira o processo a alterar\nProcesso:");
-				scanf(" %d", &prsSub);
 
-				printf("\nInsira a operação a alterar\nOperação:");
-				scanf(" %d", &opSub);
-				/*
-								rtr = ShowOperation(process, prsSub, opSub);
+			printf("\nInsira o processo a alterar\nProcesso:");
+			scanf("%d", &prsSub);
 
-								if (rtr == 0)
-									printf("\nOpções inválidas");
-				*/
-				printf("\nInsira a maquina a alterar\nOperação:");
-				scanf(" %d", &mchSub);
+			printf("\nInsira a operação a alterar\nOperação:");
+			scanf("%d", &opSub);
+
+			rtr = ShowOperation(process, prsSub, opSub);
+
+			if (rtr == 0)
+				printf("\nOpções inválida");
+
+			printf("\nInsira a maquina a alterar\nOperação:");
+			scanf("%d", &mchSub);
+			printf("\n---conteudo %d %p ", process->npp, process->next);
+			printf("-----------------");
+			Machine *objMchSubs = NULL;
+			objMchSubs = ChangeMachine(process, prsSub, opSub, mchSub);
+
+			printf("Novo numero de maquina:\nMaquina:");
+			scanf("%d", &mchSub);
+			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
+			scanf("%d", &timeSub);
+			objMchSubs->pc = mchSub;
+			objMchSubs->time = timeSub;
+
 			
-				// Process *teste=SearchProcessPlan(process);
-
-				//printf("\nola %p\n", )
-					/*Machine *objMchSubs = NULL;
-					objMchSubs = ChangeMachine(process, prsSub, opSub, mchSub);
-					*/
-					printf("Novo numero de maquina:\nMaquina:");
-				scanf(" %d", &mchSub);
-				printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
-				scanf("%d", &timeSub); /*
-				 objMchSubs->pc = mchSub;
-				 objMchSubs->time = timeSub;*/
-
-			} while (rtr == 0);
-
-			printf("\n-----------------------------------------------------------------------------\n");
-		case 4:
-
 			break;
+		case 4: // Media mais baixa
+			int processMeanLow;
+			printf("Insira o processo a calcular: ");
+			scanf("%d", &processMeanLow);
+			printf("\n A media mais baixa é: %.2f", MeanLow(process, processMeanLow));
+			break;
+
+		case 5: // Media mais baixa
+			int processMeanHigh;
+			printf("Insira o processo a calcular: ");
+			scanf("%d", &processMeanHigh);
+			printf("\n A media mais baixa é: %.2f", MeanHigh(process, processMeanHigh));
+			break;
+		case 69:
+			Showlist(process);
 			break;
 		default:
 			break;

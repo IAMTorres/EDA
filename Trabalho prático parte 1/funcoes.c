@@ -16,7 +16,12 @@
 #pragma endregion
 
 #pragma region Metodos
-
+/**
+ * @brief Insere os dados nas estruturas
+ *
+ * @param process
+ * @return Process*
+ */
 Process *InsertData(Process *process)
 {
     int nprocess = 1;
@@ -44,42 +49,47 @@ Process *InsertData(Process *process)
     Machine *machineobj = CreateMachine(1, 4);
     process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
 
-   machineobj = CreateMachine(3, 5);
+    machineobj = CreateMachine(3, 5);
     process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
 
-   machineobj = CreateMachine(2, 4);
+    machineobj = CreateMachine(2, 4);
     process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-   machineobj = CreateMachine(4, 5);
+    machineobj = CreateMachine(4, 5);
     process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-   machineobj = CreateMachine(2, 4);
+    machineobj = CreateMachine(2, 4);
     process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-   machineobj = CreateMachine(4, 5);
+    machineobj = CreateMachine(4, 5);
     process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-   machineobj = CreateMachine(3, 5);
+    machineobj = CreateMachine(3, 5);
     process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
 
-   machineobj = CreateMachine(5, 6);
+    machineobj = CreateMachine(5, 6);
     process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
 
-   machineobj = CreateMachine(4, 5);
+    machineobj = CreateMachine(4, 5);
     process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
 
-   machineobj = CreateMachine(5, 5);
+    machineobj = CreateMachine(5, 5);
     process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
-   machineobj = CreateMachine(6, 4);
+    machineobj = CreateMachine(6, 4);
     process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
 
-   machineobj = CreateMachine(7, 5);
+    machineobj = CreateMachine(7, 5);
     process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
-      machineobj = CreateMachine(8, 9);
+    machineobj = CreateMachine(8, 9);
     process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
     return process;
 }
-
+/**
+ * @brief Faz a leitura do ficheiro
+ *
+ * @param process
+ * @return Process*
+ */
 Process *ReadFile(Process *process)
 {
 
@@ -108,9 +118,16 @@ Process *ReadFile(Process *process)
 
     return process;
 }
-
+/**
+ * @brief Retorna o endereço de memoria do ProcessPlan
+ *
+ * @param prs
+ * @param nProcess
+ * @return Process*
+ */
 Process *SearchProcessPlan(Process *prs, int nProcess)
 {
+
     Process *auxPrs = prs;
 
     while (auxPrs != NULL)
@@ -123,7 +140,13 @@ Process *SearchProcessPlan(Process *prs, int nProcess)
         auxPrs = auxPrs->next;
     }
 }
-
+/**
+ * @brief Retorna o endereço de memoria de Operation
+ *
+ * @param op
+ * @param nOperation
+ * @return Operation*
+ */
 Operation *SearchOperation(Operation *op, int nOperation)
 {
     Operation *auxOp = op;
@@ -136,6 +159,13 @@ Operation *SearchOperation(Operation *op, int nOperation)
         auxOp = auxOp->next;
     }
 }
+/**
+ * @brief Retorna o endereço de memoria de Machine
+ *
+ * @param mch
+ * @param nMachine
+ * @return Machine*
+ */
 Machine *SearchMachine(Machine *mch, int nMachine)
 {
     Machine *auxMch = mch;
@@ -148,17 +178,35 @@ Machine *SearchMachine(Machine *mch, int nMachine)
         auxMch = auxMch->next;
     }
 }
-void ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
-{printf("ola asd as d");
+/**
+ * @brief Altera os valores de maquina
+ *
+ * @param process
+ * @param nProcess
+ * @param nOperation
+ * @param nMachine
+ * @return Machine*
+ */
+Machine *ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
+{
     Process *prs = NULL;
     Operation *op = NULL;
     Machine *mch = NULL;
-    prs = SearchProcessPlan(process, nProcess);
-    prs->op = op;
-    op = SearchOperation(op, nOperation);
-    op->machine = mch;
-    mch = SearchMachine(mch, nMachine);
-    
+    if (process != NULL)
+    {
+        prs = SearchProcessPlan(process, nProcess);
+        op = prs->op;
+        op = SearchOperation(op, nOperation);
+        if (op != NULL)
+        {
+            mch = op->machine;
+        }
+        if (mch != NULL)
+        {
+            mch = SearchMachine(mch, nMachine);
+        }
+    }
+    return mch;
 }
 
 #pragma region PP
@@ -171,13 +219,12 @@ void ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
  */
 Process *CreateProcessPlan(int npp)
 {
-    printf("MAlloc process plan--\n"); // Debug
+
     Process *aux = (Process *)calloc(1, sizeof(Process));
     if (aux != NULL)
     {
         aux->npp = npp;
         aux->next = NULL;
-        printf("create pp %d %p", aux->npp, aux->next);
     }
     return aux;
 }
@@ -210,7 +257,6 @@ void Showlist(Process *prs)
     Process *auxPrs = prs;
     Operation *op = NULL;
     Machine *mch = NULL;
-    printf("\nentrou showlist\n");
     while (auxPrs != NULL)
     {
         printf("\nNumber npp: %p %d %p\n", auxPrs, auxPrs->npp, auxPrs->next);
@@ -232,14 +278,20 @@ void Showlist(Process *prs)
         auxPrs = auxPrs->next;
     }
 }
-
+/**
+ * @brief Mostra todos os valores
+ *
+ * @param process
+ * @param prsSub
+ * @param opSub
+ * @return int
+ */
 int ShowOperation(Process *process, int prsSub, int opSub)
 {
 
     Process *auxPrs = process;
     Operation *op = NULL;
     Machine *mch = NULL;
-    printf("\nentrou showOperation\n");
     while (auxPrs != NULL)
     {
         if (prsSub == auxPrs->npp)
@@ -252,22 +304,16 @@ int ShowOperation(Process *process, int prsSub, int opSub)
                     mch = op->machine;
                     while (mch != NULL)
                     {
-                        printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
+                        printf("\n       Machine: %d Time: %d\n", mch->pc, mch->time);
                         mch = mch->next;
-                        return 1;
                     }
+                    return 1;
                 }
-                else
-                {
-                    return 0;
-                }
+
                 op = op->next;
             }
         }
-        else
-        {
-            return 0;
-        }
+
         auxPrs = auxPrs->next;
     }
 }
@@ -282,7 +328,6 @@ int ShowOperation(Process *process, int prsSub, int opSub)
 Operation *CreateOperation(int nOp)
 {
 
-    printf("MAlloc operações inicio"); // Debug
     Operation *aux = (Operation *)calloc(1, sizeof(Operation));
 
     if (aux != NULL)
@@ -290,10 +335,8 @@ Operation *CreateOperation(int nOp)
         aux->noperation = nOp;
         aux->next = NULL;
         aux->machine = NULL;
-        printf("create op %d %p", aux->noperation, aux->next);
     }
     return aux;
-    ("MAlloc operações fim");
 }
 /**
  * @brief Insere o objeto no processo
@@ -308,8 +351,6 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
 
     Process *auxPrs = prs;
     Operation *opaux = prs->op;
-
-    printf("InsertOperation entrou"); // debug
     while (auxPrs != NULL)
     {
 
@@ -336,17 +377,16 @@ void RemoveOperation(Process *prs, int prsSubs, int opSubs)
     Machine *mch = NULL;
     while (auxPrs != NULL)
     {
-        printf("\n\n processo entrada %d", auxPrs->npp);
         if (prsSubs == auxPrs->npp)
-        {
+        {printf("ja deu");
             op = auxPrs->op;
             Operation *nodoAtual = op, *nodoAnterior;
-            printf("\n\n operacap entrada %d", op->noperation);
             if (op->noperation == opSubs)
             {
                 printf("entrou if");
                 op = nodoAtual->next;
                 free(nodoAtual);
+                free(op->machine);
             }
             else
             {
@@ -378,32 +418,6 @@ void RemoveOperation(Process *prs, int prsSubs, int opSubs)
     }
 }
 
-void AlterarOperações(Process *prs, int prsSubs, int opSubs)
-{
-    Process *auxPrs = prs;
-    Operation *op = NULL;
-    Machine *mch = NULL;
-    printf("\nentrou showlist\n");
-    while (auxPrs != NULL)
-    {
-        op = auxPrs->op;
-        while (op != NULL)
-        {
-            printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
-
-            mch = op->machine;
-            while (mch != NULL)
-            {
-                printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
-                mch = mch->next;
-            }
-
-            op = op->next;
-        }
-
-        auxPrs = auxPrs->next;
-    }
-}
 #pragma endregion
 #pragma region MCH
 
@@ -455,4 +469,97 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
     printf("%p -----", auxPrs);
 }
 #pragma endregion
+
+float MeanLow(Process *process, int processMeanLow)
+{
+
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    int sum = 0;
+    float mean = 0;
+    int count = 0;
+    int lowTime;
+    if (process != NULL)
+    {
+        prs = SearchProcessPlan(process, processMeanLow);
+        op = prs->op;
+        printf("\noper %p", prs->op);
+
+        while (op != NULL)
+        {
+
+            op = SearchOperation(op, op->noperation);
+            mch = op->machine;
+            lowTime = mch->time;
+            printf("\nxxxxxxx %d\n", lowTime);
+            while (mch != NULL)
+            {
+
+                printf("\n----tempo %d e %d\n", lowTime, mch->time);
+                mch = SearchMachine(mch, mch->pc);
+
+                if (mch->time < lowTime)
+                {
+                    printf("foi desta");
+                    lowTime = mch->time;
+                }
+                mch = mch->next;
+            }
+            sum = sum + lowTime;
+            count++;
+            op = op->next;
+        }
+    }
+
+    mean = sum / count;
+    printf("\noiii------%d", count);
+    return mean;
+}
+
+float MeanHigh(Process *process, int processMeanHigh)
+{
+
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    int sum = 0;
+    float mean = 0;
+    int count = 0;
+    int highTime;
+    if (process != NULL)
+    {
+        prs = SearchProcessPlan(process, processMeanHigh);
+        op = prs->op;
+
+        while (op != NULL)
+        {
+
+            op = SearchOperation(op, op->noperation);
+            mch = op->machine;
+
+            highTime = 0;
+            while (mch != NULL)
+            {
+                mch = SearchMachine(mch, mch->pc);
+
+                // count++;
+                if (mch->time > highTime)
+                {
+
+                    highTime = mch->time;
+                }
+                mch = mch->next;
+            }
+            sum = sum + highTime;
+            count++;
+            op = op->next;
+        }
+    }
+
+    mean = sum / count;
+
+    return mean;
+}
+
 #pragma endregion
