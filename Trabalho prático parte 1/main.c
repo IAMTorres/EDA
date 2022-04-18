@@ -37,61 +37,8 @@ int main()
 		switch (option)
 		{
 		case 0:
-			Process *prs = CreateProcessPlan(nprocess);
-			process = InsertProcessPlan(prs, process);
-			Operation *operationobj = NULL;
-			Machine *machineobj = NULL;
-			{
-				FILE *fp = fopen("dados.txt", "rt");
-				int op;
-				char str[50];
-				char *pch;
-				int mch[TAM];
-				int time[TAM];
-				int i = 0;
-				int t = 0;
+			process=ReadFile(process);
 
-				if (fp != NULL)
-					while (!feof(fp))
-					{
-						fscanf(fp, "%d\n", &op);
-						printf("OP %d\n", op);
-						i = 0;
-						t = 0;
-
-						operationobj = CreateOperation(op);
-						process = InsertOperationProcess(operationobj, process, op);
-						printf("segunda vez----%p", process);
-						fscanf(fp, "%s\n", str);
-						printf("%s\n", str);
-						pch = strtok(str, "[,]");
-						while (pch != NULL)
-						{
-							printf("%s\n", pch);
-							mch[i] = atoi(pch);
-							pch = strtok(NULL, "[,]");
-							i++;
-						}
-
-						fscanf(fp, "%s\n", str);
-						printf("%s\n", str);
-						pch = strtok(str, "(,)");
-						while (pch != NULL)
-						{
-							printf("%s\n", pch);
-							time[t] = atoi(pch);
-							pch = strtok(NULL, "(,)");
-							t++;
-						}
-						for (int z = 0; z < i; z++)
-						{
-							machineobj = NULL;
-							machineobj = CreateMachine(mch[z], time[z]);
-							process = InsertMachineOperationProcess(process, machineobj, 1, op);
-						}
-					}
-				Showlist(process);
-			}
 			break;
 
 		case 1:
@@ -102,14 +49,13 @@ int main()
 			Showlist(process);
 			break;
 		case 2:
-			printf("\nInsira o processo a remover\nProcesso:");
+			printf("\nInsira o processo\nProcesso:");
 			scanf("%d", &prsSub);
 
 			printf("\nInsira a operação a remover\nOperação:");
 			scanf("%d", &opSub);
 
 			RemoveOperation(process, prsSub, opSub);
-			printf("\n-----------------------------------------------------------------------------\n");
 
 			break;
 		case 3: // Alterar
@@ -129,16 +75,12 @@ int main()
 			printf("\nInsira a maquina a alterar\nOperação:");
 			scanf("%d", &mchSub);
 
-			Machine *objMchSubs = NULL;
-			objMchSubs = ChangeMachine(process, prsSub, opSub, mchSub);
-
 			printf("Novo numero de maquina:\nMaquina:");
 			scanf("%d", &mchSub);
 			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
 			scanf("%d", &timeSub);
-
-			objMchSubs->pc = mchSub;
-			objMchSubs->time = timeSub;
+			Machine *objMchSubs = NULL;
+			objMchSubs = ChangeOperation(process, prsSub, opSub, mchSub, timeSub, mchSub);
 
 			break;
 		case 4: // Media mais baixa
@@ -184,7 +126,7 @@ int main()
 			Showlist(process);
 			break;
 		case 11:
-		ShowAll(process,1,1,0);
+			ShowAll(process, 1, 1, 0);
 			break;
 		default:
 			break;

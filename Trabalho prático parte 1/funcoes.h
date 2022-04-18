@@ -43,31 +43,32 @@ Operation *CreateOperation(int numberOperation);
 Process *InsertMachineOperationProcess(Process *prs, Machine *mchObj, int numberOperation, int numberProcess);
 
 Machine *CreateMachine(int pc, int time);
-Process *InsertOperationProcess(Operation *opObj, Process *prs, int numberProcess); 
+Process *InsertOperationProcess(Operation *opObj, Process *prs, int numberProcess);
 
-Process *RemoveOperation(Process *process, int opPrs, int opSubs);
+Process *RemoveOperation(Process *process, int prsSub, int opSubs);
 
-int Show(Process *process, int prsSub, int opSub, int showPrs, int showOp, int showMch);
 int ShowAll(Process *process, int showPrs, int showOp, int showMch);
 int Showlist(Process *prs);
-
+int Show(Process *process, int prsSub, int opSub, int showPrs, int showOp, int showMch);
 
 Process *SearchProcessPlan(Process *prs, int nProcess);
 Operation *SearchOperation(Operation *op, int nOperation);
 Machine *SearchMachine(Machine *mch, int nMachine);
 
-Machine *ChangeMachine(Process *process, int prsSub, int opSub, int mchSub);
+Machine *ChangeOperation(Process *process, int prsSub, int opSub, int mchSub, int newTime, int newPc);
 
 Process *InsertData(Process *process);
 
 Process *ReadFile(Process *process);
 
 float MeanLow(Process *process, int processMeanLow);
-float MeanHigh(Process *process, int processMeanLow);
+float MeanHigh(Process *process, int processMeanHigh);
 float MeanProcess(Process *process, int processMean);
 float MeanOperation(Process *process, int operationMean);
 
 int SumLow(Process *process, int processMeanLow);
+int SumHigh(Process *process, int processSumHigh);
+
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
-int SumHigh(Process *process, int processSumHigh);
+
