@@ -56,7 +56,7 @@ int main()
 			scanf("%d", &opSub);
 
 			RemoveOperation(process, prsSub, opSub);
-
+ //.....
 			break;
 		case 3: // Alterar
 			int rtr = 0;

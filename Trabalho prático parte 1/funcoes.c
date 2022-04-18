@@ -464,7 +464,8 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
 Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
 { 
     Operation *op = NULL;
-
+ 
+ //.....
     op = prs->op;
     Operation *nodoAtual = op, *nodoAnterior;
     if (nodoAtual->noperation == opSubs)

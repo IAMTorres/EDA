@@ -35,7 +35,7 @@ typedef struct _pp
 	Operation *op;
 	struct _pp *next;
 } Process;
-
+ //.....
 Process *CreateProcessPlan(int numberProcess);
 Process *InsertProcessPlan(Process *prsObj, Process *Process);
 
@@ -71,4 +71,3 @@ int SumHigh(Process *process, int processSumHigh);
 
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
-
