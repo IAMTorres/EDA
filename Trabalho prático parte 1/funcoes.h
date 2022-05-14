@@ -36,18 +36,14 @@ typedef struct _pp
 	struct _pp *next;
 } Process;
 
-
-
 typedef struct _job
-{Process *prs;
- struct reg *left;
- struct reg *right;
+{
+	Process *prs;
+	struct reg *left;
+	struct reg *right;
 } *Job;
 
-
-
-
- //.....
+//.....
 Process *CreateProcessPlan(int numberProcess);
 Process *InsertProcessPlan(Process *prsObj, Process *Process);
 
@@ -83,3 +79,6 @@ int SumHigh(Process *process, int processSumHigh);
 
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
+Job consultar(Job abp, int valor);
+Job inserir(Job abp, int valor);
+void preorder(Job abp);

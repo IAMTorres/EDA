@@ -143,11 +143,9 @@ Process *ReadFile(Process *process)
                     machineobj = CreateMachine(mch[z], time[z]);
                     process = InsertMachineOperationProcess(process, machineobj, op, 1);
                 }
-           
-            } 
-           
-    } return process;
-
+            }
+    }
+    return process;
 }
 /**
  * @brief Retorna o endereço de memoria do ProcessPlan
@@ -459,16 +457,16 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
  * @param opSubs
  */
 Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
-{ 
+{
     Operation *op = NULL;
- 
- //.....
+
+    //.....
     op = prs->op;
     Operation *nodoAtual = op, *nodoAnterior;
     if (nodoAtual->noperation == opSubs)
     {
         op = nodoAtual->next;
-       
+
         free(nodoAtual);
     }
     else
@@ -479,7 +477,6 @@ Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
         {
             nodoAnterior = nodoAtual;
             nodoAtual = nodoAtual->next;
-         
         }
         if (nodoAtual != NULL)
         {
@@ -487,8 +484,7 @@ Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
             free(nodoAtual);
         }
     }
-   prs->op=op;
-    
+    prs->op = op;
 }
 
 #pragma endregion
@@ -760,48 +756,54 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
-
-
-
-
-
-
-
-
-
-
-
-ABP inserir(ABP abp, int valor)
-{ABP novo;
- if (abp==NULL)
- {novo = (ABP) malloc(sizeof(struct reg));
-  if (novo!=NULL)
-  {novo->valor = valor;
-   novo->esquerda = NULL;
-   novo->direita = NULL;
-   return(novo);
-  }
-  else return(abp);
- }
- else if (valor < abp->valor)
-  {abp->esquerda = inserir(abp->esquerda,valor);
-   return(abp);
-  }
- else 
-  {abp->direita = inserir(abp->direita,valor);
-   return(abp);
-  }
+Job inserir(Job abp, int valor)
+{
+    Job novo;
+    if (abp == NULL)
+    {
+        novo = (Job *)calloc(1, sizeof(Job));
+        if (novo != NULL)
+        {
+            novo->prs->npp = valor;
+            novo->left = NULL;
+            novo->right = NULL;
+            return (novo);
+        }
+        else
+            return (abp);
+    }
+    else if (valor < abp->prs->npp)
+    {
+        abp->left = inserir(abp->left, valor);
+        return (abp);
+    }
+    else
+    {
+        abp->right = inserir(abp->right, valor);
+        return (abp);
+    }
 }
 
-
-
-
-ABP consultar(ABP abp, int valor)
-{while (abp != NULL) 
- {if (abp->valor == valor) return(abp);
-  else if (abp->valor < valor) abp = abp->direita;
-  else abp = abp ->esquerda;
- }
- return(NULL);
+Job consultar(Job abp, int valor)
+{
+    while (abp != NULL)
+    {
+        if (abp->prs->npp == valor)
+            return (abp);
+        else if (abp->prs->npp < valor)
+            abp = abp->right;
+        else
+            abp = abp->left;
+    }
+    return (NULL);
 }
 
+void preorder(Job abp)
+{
+    if (abp != NULL)
+    {
+        printf("%d ", abp->prs->npp);
+        preorder(abp->left);
+        preorder(abp->right);
+    }
+}

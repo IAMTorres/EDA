@@ -25,7 +25,7 @@ int main()
 	//	Showlist(process);
 	int option = 0;
 	Process *process = NULL;
-	ABP abp = NULL;
+	Job job = NULL;
 	do
 	{
 		int nprocess = 1;
@@ -38,11 +38,11 @@ int main()
 		switch (option)
 		{
 		case 300:
-			process=ReadFile(process);
-			Showlist(process); 
+			process = ReadFile(process);
+			Showlist(process);
 			break;
 		case 1:
-		
+
 			/*process = ReadFile(process);*/
 			// Lista ligada vazia
 			process = InsertData(process);
@@ -56,7 +56,7 @@ int main()
 			scanf("%d", &opSub);
 
 			RemoveOperation(process, prsSub, opSub);
- //.....
+			//.....
 			break;
 		case 3: // Alterar
 			int rtr = 0;
@@ -128,13 +128,13 @@ int main()
 		case 11:
 			ShowAll(process, 1, 1, 0);
 			break;
-case 12:
+		case 12:
+			preorder(job);
+			break;
+		case 13:
+			job = inserir(job, 1);
+			break;
 
-break;
-			case 13:
-				 consultar(ABP abp, int valor);
-		break;
-		
 		default:
 			break;
 		}
