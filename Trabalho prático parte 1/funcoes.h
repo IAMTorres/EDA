@@ -35,6 +35,18 @@ typedef struct _pp
 	Operation *op;
 	struct _pp *next;
 } Process;
+
+
+
+typedef struct _job
+{Process *prs;
+ struct reg *left;
+ struct reg *right;
+} *Job;
+
+
+
+
  //.....
 Process *CreateProcessPlan(int numberProcess);
 Process *InsertProcessPlan(Process *prsObj, Process *Process);

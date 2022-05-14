@@ -143,11 +143,11 @@ Process *ReadFile(Process *process)
                     machineobj = CreateMachine(mch[z], time[z]);
                     process = InsertMachineOperationProcess(process, machineobj, op, 1);
                 }
-                continue;
-            }
-    }
+           
+            } 
+           
+    } return process;
 
-    Showlist(process);
 }
 /**
  * @brief Retorna o endereço de memoria do ProcessPlan

@@ -25,6 +25,7 @@ int main()
 	//	Showlist(process);
 	int option = 0;
 	Process *process = NULL;
+	ABP abp = NULL;
 	do
 	{
 		int nprocess = 1;
@@ -36,13 +37,12 @@ int main()
 		scanf("%d", &option);
 		switch (option)
 		{
-		case 0:
+		case 300:
 			process=ReadFile(process);
-
+			Showlist(process); 
 			break;
-
 		case 1:
-
+		
 			/*process = ReadFile(process);*/
 			// Lista ligada vazia
 			process = InsertData(process);
@@ -128,6 +128,9 @@ int main()
 		case 11:
 			ShowAll(process, 1, 1, 0);
 			break;
+
+			case 12:
+				 consultar(ABP abp, int valor);
 		default:
 			break;
 		}
