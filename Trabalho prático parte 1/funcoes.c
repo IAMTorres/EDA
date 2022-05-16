@@ -450,9 +450,6 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
     }
 }
 
-
-
-
 /**
  * @brief Romove uma operation de um process
  *
@@ -524,11 +521,6 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
 
     return prs;
 }
-
-
-
-
-
 
 #pragma endregion
 
@@ -766,21 +758,18 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
-
-
-Job InsertOperationBtree(Operation *opObj,Job job, int op)
-{Operation *opAux = NULL;
-Job jobAux=NULL;
-jobAux=consultar(Job job, op);
-opAux=jobAux->op;
-
+Job InsertOperationBtree(Operation *opObj, Job job, int op)
+{
+    Operation *opAux = NULL;
+    Job jobAux = NULL;
+    jobAux = consultar(Job job, op);
+    opAux = jobAux->op;
 
     if (opAux != NULL)
     {
 
-opObj->next=jobAux->op;
-jobAux->op=opObj;
-     
+        opObj->next = jobAux->op;
+        jobAux->op = opObj;
     }
 }
 
@@ -798,95 +787,73 @@ Operation *CreateOperation(int nOp)
     return aux;
 }
 
-
-
-
-
-
-
-
-
-
-
-Job inserir(Job job)//entra aqui apos ter recebido o op
+Job inserir(Job job) // entra aqui apos ter recebido o op
 {
-  Job novo;
-  Operation *op=NULL;
-  op=CreateOperation(nOp);
+    Job novo;
+    Operation *op = NULL;
+    op = CreateOperation(nOp);
 
-  if (job == NULL)
-  {
-    novo = (Job)malloc(sizeof(struct _job));
-    if (novo != NULL)
+    if (job == NULL)
     {
-      novo->right = NULL;
-      novo->left = NULL;
-      return (novo);
+        novo = (Job)malloc(sizeof(struct _job));
+        if (novo != NULL)
+        {
+            novo->right = NULL;
+            novo->left = NULL;
+            return (novo);
+        }
+        else
+            return (job);
+    }
+    else if (valor < job->valor)
+    {
+        job->right = inserir(job->right, valor);
+        return (job);
     }
     else
-      return (job);
-  }
-  else if (valor < job->valor)
-  {
-    job->right = inserir(job->right, valor);
-    return (job);
-  }
-  else
-  {
-    job->left = inserir(job->left, valor);
-    return (job);
-  }
+    {
+        job->left = inserir(job->left, valor);
+        return (job);
+    }
 }
-
-
-
 
 void preorder(Job job)
 {
-  if (job != NULL)
-  {
-    printf("%d ", job->valor);
-    preorder(job->right);
-    preorder(job->left);
-  }
+    if (job != NULL)
+    {
+        printf("%d ", job->valor);
+        preorder(job->right);
+        preorder(job->left);
+    }
 }
 
 int altura(Job job)
 {
-  int altEsq, altDir;
-  if (job == NULL)
-    return (0);
-  else
-  {
-    altEsq = altura(job->right);
-    altDir = altura(job->left);
-    if (altEsq > altDir)
-      return (altEsq + 1);
+    int altEsq, altDir;
+    if (job == NULL)
+        return (0);
     else
-      return (altDir + 1);
-  }
+    {
+        altEsq = altura(job->right);
+        altDir = altura(job->left);
+        if (altEsq > altDir)
+            return (altEsq + 1);
+        else
+            return (altDir + 1);
+    }
 }
 
 // Consulta do endereço de memória
 Job consultar(Job job, int valor)
 {
-  while (job != NULL)
-  {
-    if (job->valor == valor)
-      return (job);
-    else if (job->valor < valor)
-      job = job->left;
-    else
-      job = job->right;
-  }
-  return (NULL);
+    while (job != NULL)
+    {
+        if (job->valor == valor)
+            return (job);
+        else if (job->valor < valor)
+            job = job->left;
+        else
+            job = job->right;
+    }
+    return (NULL);
 }
-
-
-
-
-
-
-
-
-
