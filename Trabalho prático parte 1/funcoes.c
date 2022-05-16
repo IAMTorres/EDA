@@ -756,54 +756,79 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
-Job inserir(Job abp, int valor)
+
+
+
+
+Job inserir(Job job, int valor)
 {
-    Job novo;
-    if (abp == NULL)
+  Job novo;
+  if (job == NULL)
+  {
+    novo = (Job)malloc(sizeof(struct _job));
+    if (novo != NULL)
     {
-        novo = (Job *)calloc(1, sizeof(Job));
-        if (novo != NULL)
-        {
-            novo->prs->npp = valor;
-            novo->left = NULL;
-            novo->right = NULL;
-            return (novo);
-        }
-        else
-            return (abp);
-    }
-    else if (valor < abp->prs->npp)
-    {
-        abp->left = inserir(abp->left, valor);
-        return (abp);
+      novo->valor = valor;
+      novo->right = NULL;
+      novo->left = NULL;
+      return (novo);
     }
     else
-    {
-        abp->right = inserir(abp->right, valor);
-        return (abp);
-    }
+      return (job);
+  }
+  else if (valor < job->valor)
+  {
+    job->right = inserir(job->right, valor);
+    return (job);
+  }
+  else
+  {
+    job->left = inserir(job->left, valor);
+    return (job);
+  }
 }
 
-Job consultar(Job abp, int valor)
+
+
+
+void preorder(Job job)
 {
-    while (abp != NULL)
-    {
-        if (abp->prs->npp == valor)
-            return (abp);
-        else if (abp->prs->npp < valor)
-            abp = abp->right;
-        else
-            abp = abp->left;
-    }
-    return (NULL);
+  if (job != NULL)
+  {
+    printf("%d ", job->valor);
+    preorder(job->right);
+    preorder(job->left);
+  }
 }
 
-void preorder(Job abp)
+int altura(Job job)
 {
-    if (abp != NULL)
-    {
-        printf("%d ", abp->prs->npp);
-        preorder(abp->left);
-        preorder(abp->right);
-    }
+  int altEsq, altDir;
+  if (job == NULL)
+    return (0);
+  else
+  {
+    altEsq = altura(job->right);
+    altDir = altura(job->left);
+    if (altEsq > altDir)
+      return (altEsq + 1);
+    else
+      return (altDir + 1);
+  }
 }
+
+// Consulta do endereço de memória
+Job consultar(Job job, int valor)
+{
+  while (job != NULL)
+  {
+    if (job->valor == valor)
+      return (job);
+    else if (job->valor < valor)
+      job = job->left;
+    else
+      job = job->right;
+  }
+  return (NULL);
+}
+

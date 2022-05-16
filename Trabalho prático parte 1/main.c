@@ -128,13 +128,19 @@ int main()
 		case 11:
 			ShowAll(process, 1, 1, 0);
 			break;
+		
 		case 12:
+			job = inserir(job, 1);
+						job = inserir(job, 2);
+									job = inserir(job, 3);
+												job = inserir(job, 4);
+
+
+
+			break;
+case 13:
 			preorder(job);
 			break;
-		case 13:
-			job = inserir(job, 1);
-			break;
-
 		default:
 			break;
 		}

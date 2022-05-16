@@ -38,12 +38,13 @@ typedef struct _pp
 
 typedef struct _job
 {
-	Process *prs;
-	struct reg *left;
-	struct reg *right;
+	int valor;//isto é só para teste visto que tem de ser removido
+	Operation *op;
+	struct _job *left;
+	struct _job *right;
 } *Job;
 
-//.....
+//..
 Process *CreateProcessPlan(int numberProcess);
 Process *InsertProcessPlan(Process *prsObj, Process *Process);
 
