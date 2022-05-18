@@ -130,16 +130,21 @@ int main()
 			break;
 		
 		case 12:
-			job = inserir(job, 1);
-						job = inserir(job, 2);
-									job = inserir(job, 3);
-												job = inserir(job, 4);
+			job = CreateNodoBtree(job, 1,100,101);
+						job = CreateNodoBtree(job, 2,200,201);
+									job = CreateNodoBtree(job, 3,300,301);
+												job = CreateNodoBtree(job, 4,400,401);
 
 
 
 			break;
-case 13:
+			case 13:
 			preorder(job);
+			break;
+case 14:Job ola=NULL;
+ola=consultar(job,4);
+printf( "\nola %d",ola->op->noperation);
+			
 			break;
 		default:
 			break;

@@ -762,60 +762,53 @@ Job InsertOperationBtree(Operation *opObj, Job job, int op)
 {
     Operation *opAux = NULL;
     Job jobAux = NULL;
-    jobAux = consultar(Job job, op);
+    jobAux = consultar(job, op);
     opAux = jobAux->op;
 
     if (opAux != NULL)
     {
-
         opObj->next = jobAux->op;
         jobAux->op = opObj;
     }
 }
 
-Operation *CreateOperation(int nOp)
+Job CreateNodoBtree(Job job,int operationId,int machineId , int timeMachine) // entra aqui apos ter recebido o op
 {
-
-    Operation *aux = (Operation *)calloc(1, sizeof(Operation));
-
-    if (aux != NULL)
-    {
-        aux->noperation = nOp;
-        aux->next = NULL;
-        aux->machine = NULL;
-    }
-    return aux;
-}
-
-Job inserir(Job job) // entra aqui apos ter recebido o op
-{
-    Job novo;
+   /// Job novo;
     Operation *op = NULL;
-    op = CreateOperation(nOp);
+    op = CreateOperation(operationId);
 
+    Machine *mch = NULL;
+    mch = CreateMachine(machineId, timeMachine);
+
+int i=0;
     if (job == NULL)
     {
-        novo = (Job)malloc(sizeof(struct _job));
+         Job novo = (Job)calloc(1, sizeof(Job));
         if (novo != NULL)
         {
+            novo->op=op;
+            novo->op->noperation=operationId;
+            novo->op->machine=mch;
             novo->right = NULL;
             novo->left = NULL;
             return (novo);
         }
         else
             return (job);
-    }
-    else if (valor < job->valor)
+
+            i++;
+             
+    }//printf( "\n ola %d",i);//printf( "\nola %d",job->op->noperation);
+     else if (operationId < job->op->noperation)
     {
-        job->right = inserir(job->right, valor);
+        job->right = CreateNodoBtree(job->right, operationId,machineId ,timeMachine);
         return (job);
     }
     else
     {
-        job->left = inserir(job->left, valor);
+           job->left = CreateNodoBtree(job->left, operationId, machineId ,timeMachine);
         return (job);
-
-        //kfefe
     }
 }
 
@@ -823,12 +816,13 @@ void preorder(Job job)
 {
     if (job != NULL)
     {
-        printf("%d ", job->valor);
+        printf("\n Operacao:%d", job->op->noperation);
+       printf("\n    Machine:%d", job->op->machine->pc);
+        printf("\n    Time:%d \n\n\n\n", job->op->machine->time);
         preorder(job->right);
         preorder(job->left);
     }
 }
-
 int altura(Job job)
 {
     int altEsq, altDir;
@@ -846,13 +840,13 @@ int altura(Job job)
 }
 
 // Consulta do endereço de memória
-Job consultar(Job job, int valor)
+Job consultar(Job job, int op)
 {
     while (job != NULL)
     {
-        if (job->valor == valor)
+        if (job->op->noperation == op)
             return (job);
-        else if (job->valor < valor)
+        else if (job->op->noperation < op)
             job = job->left;
         else
             job = job->right;

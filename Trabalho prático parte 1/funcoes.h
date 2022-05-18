@@ -79,6 +79,12 @@ int SumHigh(Process *process, int processSumHigh);
 
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
-Job consultar(Job abp, int valor);
-Job inserir(Job abp, int valor);
-void preorder(Job abp);
+
+
+Job consultar(Job job, int op);
+Job InsertOperationBtree(Operation *opObj, Job job, int op);
+Job CreateNodoBtree(Job job, int operationId,int machineId, int timeMachine);
+void preorder(Job job);
+
+
+
