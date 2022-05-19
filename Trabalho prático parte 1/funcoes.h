@@ -38,7 +38,7 @@ typedef struct _pp
 
 typedef struct _job
 {
-	Operation *op;
+	Process *prs;
 	struct _job *left;
 	struct _job *right;
 } *Job;
@@ -81,10 +81,9 @@ int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
 
 
-Job consultar(Job job, int op);
+Job SerchJob(Job job, int op);
 Job InsertOperationBtree(Operation *opObj, Job job, int op);
-Job CreateNodoBtree(Job job, int operationId,int machineId, int timeMachine);
+Job CreateNodoBtree(Job job,int processId, int operationId,int machineId, int timeMachine);
 void preorder(Job job);
-
-
+Job ReadFileBtree(Job job);
 

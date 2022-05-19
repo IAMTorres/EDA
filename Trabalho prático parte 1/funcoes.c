@@ -33,57 +33,57 @@ Process *InsertData(Process *process)
     Process *prs = CreateProcessPlan(nprocess);
     process = InsertProcessPlan(prs, process);
     /*
-        Operation *operationobj = CreateOperation(nop);
-        process = InsertOperationProcess(operationobj, process, nprocess);
+        Operation *operationObj = CreateOperation(nop);
+        process = InsertOperationProcess(operationObj, process, nprocess);
 
-        Machine *machineobj = CreateMachine(pc, time);
-        process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);*/
+        Machine *machineObj = CreateMachine(pc, time);
+        process = InsertMachineOperationProcess(process, machineObj, nop, nprocess);*/
 
-    Operation *operationobj = CreateOperation(1);
-    process = InsertOperationProcess(operationobj, process, 1);
-    operationobj = CreateOperation(2);
-    process = InsertOperationProcess(operationobj, process, 1);
-    operationobj = CreateOperation(3);
-    process = InsertOperationProcess(operationobj, process, 1);
-    operationobj = CreateOperation(4);
-    process = InsertOperationProcess(operationobj, process, 1);
+    Operation *operationObj = CreateOperation(1);
+    process = InsertOperationProcess(operationObj, process, 1);
+    operationObj = CreateOperation(2);
+    process = InsertOperationProcess(operationObj, process, 1);
+    operationObj = CreateOperation(3);
+    process = InsertOperationProcess(operationObj, process, 1);
+    operationObj = CreateOperation(4);
+    process = InsertOperationProcess(operationObj, process, 1);
 
-    Machine *machineobj = CreateMachine(1, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
+    Machine *machineObj = CreateMachine(1, 4);
+    process = InsertMachineOperationProcess(process, machineObj, 1, nprocess);
 
-    machineobj = CreateMachine(3, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
+    machineObj = CreateMachine(3, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 1, nprocess);
 
-    machineobj = CreateMachine(2, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+    machineObj = CreateMachine(2, 4);
+    process = InsertMachineOperationProcess(process, machineObj, 2, nprocess);
 
-    machineobj = CreateMachine(4, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+    machineObj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 2, nprocess);
 
-    machineobj = CreateMachine(2, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+    machineObj = CreateMachine(2, 4);
+    process = InsertMachineOperationProcess(process, machineObj, 2, nprocess);
 
-    machineobj = CreateMachine(4, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+    machineObj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 2, nprocess);
 
-    machineobj = CreateMachine(3, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
+    machineObj = CreateMachine(3, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 3, nprocess);
 
-    machineobj = CreateMachine(5, 6);
-    process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
+    machineObj = CreateMachine(5, 6);
+    process = InsertMachineOperationProcess(process, machineObj, 3, nprocess);
 
-    machineobj = CreateMachine(4, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+    machineObj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 4, nprocess);
 
-    machineobj = CreateMachine(5, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
-    machineobj = CreateMachine(6, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+    machineObj = CreateMachine(5, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 4, nprocess);
+    machineObj = CreateMachine(6, 4);
+    process = InsertMachineOperationProcess(process, machineObj, 4, nprocess);
 
-    machineobj = CreateMachine(7, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
-    machineobj = CreateMachine(8, 9);
-    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+    machineObj = CreateMachine(7, 5);
+    process = InsertMachineOperationProcess(process, machineObj, 4, nprocess);
+    machineObj = CreateMachine(8, 9);
+    process = InsertMachineOperationProcess(process, machineObj, 4, nprocess);
     return process;
 }
 /**
@@ -96,8 +96,8 @@ Process *ReadFile(Process *process)
 {
     Process *prs = CreateProcessPlan(1);
     process = InsertProcessPlan(prs, process);
-    Operation *operationobj = NULL;
-    Machine *machineobj = NULL;
+    Operation *operationObj = NULL;
+    Machine *machineObj = NULL;
     {
         FILE *fp = fopen("dados.txt", "rt");
         int op;
@@ -115,8 +115,8 @@ Process *ReadFile(Process *process)
                 i = 0;
                 t = 0;
 
-                operationobj = CreateOperation(op);
-                process = InsertOperationProcess(operationobj, process, op);
+                operationObj = CreateOperation(op);
+                process = InsertOperationProcess(operationObj, process, op);
                 fscanf(fp, "%s\n", str);
                 pch = strtok(str, "[,]");
                 while (pch != NULL)
@@ -139,9 +139,9 @@ Process *ReadFile(Process *process)
                 }
                 for (int z = 0; z < i; z++)
                 {
-                    machineobj = NULL;
-                    machineobj = CreateMachine(mch[z], time[z]);
-                    process = InsertMachineOperationProcess(process, machineobj, op, 1);
+                    machineObj = NULL;
+                    machineObj = CreateMachine(mch[z], time[z]);
+                    process = InsertMachineOperationProcess(process, machineObj, op, 1);
                 }
             }
     }
@@ -264,13 +264,13 @@ Process *CreateProcessPlan(int npp)
  * @brief Junta o objeto á lista process
  *
  */
-Process *InsertProcessPlan(Process *prsobj, Process *process)
+Process *InsertProcessPlan(Process *prsObj, Process *process)
 {
-    if (prsobj != NULL)
+    if (prsObj != NULL)
     {
-        prsobj->op = NULL;
-        prsobj->next = process;
-        return (prsobj);
+        prsObj->op = NULL;
+        prsObj->next = process;
+        return (prsObj);
     }
     else
         return (process);
@@ -758,57 +758,49 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
-Job InsertOperationBtree(Operation *opObj, Job job, int op)
+Job CreateNodoBtree(Job job, int processId, int operationId, int machineId, int timeMachine) // entra aqui apos ter recebido o op
 {
-    Operation *opAux = NULL;
-    Job jobAux = NULL;
-    jobAux = consultar(job, op);
-    opAux = jobAux->op;
+    /// Job novo;
+    Process *prs = CreateProcessPlan(processId);
+    Operation *op = CreateOperation(operationId);
+    Machine *mch = CreateMachine(machineId, timeMachine);
 
-    if (opAux != NULL)
+    Job jobAux = SerchJob(Job job, int prs)
+
+        if (jobAux == NULL)
     {
-        opObj->next = jobAux->op;
-        jobAux->op = opObj;
-    }
-}
-
-Job CreateNodoBtree(Job job,int operationId,int machineId , int timeMachine) // entra aqui apos ter recebido o op
-{
-   /// Job novo;
-    Operation *op = NULL;
-    op = CreateOperation(operationId);
-
-    Machine *mch = NULL;
-    mch = CreateMachine(machineId, timeMachine);
-
-int i=0;
-    if (job == NULL)
-    {
-         Job novo = (Job)calloc(1, sizeof(Job));
-        if (novo != NULL)
-        {
-            novo->op=op;
-            novo->op->noperation=operationId;
-            novo->op->machine=mch;
-            novo->right = NULL;
-            novo->left = NULL;
-            return (novo);
-        }
-        else
-            return (job);
-
-            i++;
-             
-    }//printf( "\n ola %d",i);//printf( "\nola %d",job->op->noperation);
-     else if (operationId < job->op->noperation)
-    {
-        job->right = CreateNodoBtree(job->right, operationId,machineId ,timeMachine);
-        return (job);
     }
     else
     {
-           job->left = CreateNodoBtree(job->left, operationId, machineId ,timeMachine);
-        return (job);
+
+        if (job == NULL && jobAux == NULL)
+        {
+
+            Job novo = (Job)calloc(1, sizeof(Job));
+            if (novo != NULL)
+            {
+                novo->prs = prs;
+                novo->prs->op = op;
+                novo->prs->op->noperation = operationId;
+                novo->prs->op->machine = mch;
+                novo->right = NULL;
+                novo->left = NULL;
+                return (novo);
+            }
+            else
+                return (job);
+
+        } // printf( "\n ola %d",i);//printf( "\nola %d",job->prs->op->noperation);
+        else if (operationId < job->prs->op->noperation)
+        {
+            job->right = CreateNodoBtree(job->right, processId, operationId, machineId, timeMachine);
+            return (job);
+        }
+        else
+        {
+            job->left = CreateNodoBtree(job->left, processId, operationId, machineId, timeMachine);
+            return (job);
+        }
     }
 }
 
@@ -816,9 +808,21 @@ void preorder(Job job)
 {
     if (job != NULL)
     {
-        printf("\n Operacao:%d", job->op->noperation);
-       printf("\n    Machine:%d", job->op->machine->pc);
-        printf("\n    Time:%d \n\n\n\n", job->op->machine->time);
+        printf("\nProcess%d", job->prs->npp);
+        Operation *opAux = job->prs->op;
+        while (opAux != NULL)
+        {
+            printf("\n Operacao:%d", job->prs->op->noperation);
+
+            Machine *mchAux = job->prs->op->machine;
+            while (mchAux != NULL)
+            {
+                printf("\n    Machine:%d", job->prs->op->machine->pc);
+                mchAux = mchAux->next;
+            }
+            opAux = opAux->next;
+        }
+        printf("\n    Time:%d \n\n", job->prs->op->machine->time);
         preorder(job->right);
         preorder(job->left);
     }
@@ -840,16 +844,77 @@ int altura(Job job)
 }
 
 // Consulta do endereço de memória
-Job consultar(Job job, int op)
+Job SerchJob(Job job, int prs)
 {
     while (job != NULL)
     {
-        if (job->op->noperation == op)
+        if (job->prs->npp == prs)
             return (job);
-        else if (job->op->noperation < op)
+        else if (job->prs->npp < prs)
             job = job->left;
         else
             job = job->right;
     }
     return (NULL);
+}
+
+Job ReadFileBtree(Job job)
+{
+    Process *processObj = NULL;
+    Process *process = NULL;
+    Operation *operationObj = NULL;
+    Machine *machineObj = NULL;
+    {
+        FILE *fp = fopen("btree.txt", "rt");
+        int opFile;
+        int prsFile;
+        char str[50];
+        char *pch;
+        int mch[TAM];
+        int time[TAM];
+        int i = 0;
+        int t = 0;
+
+        if (fp != NULL)
+            while (!feof(fp))
+            {
+                  fscanf(fp, "%d\n", &prsFile);
+                processObj = CreateProcessPlan(prsFile);
+                process = InsertProcessPlan(processObj, process);
+                fscanf(fp, "%d\n", &opFile);
+                i = 0;
+                t = 0;
+
+                operationObj = CreateOperation(opFile);
+                process = InsertOperationProcess(operationObj, process, opFile);
+                fscanf(fp, "%s\n", str);
+                pch = strtok(str, "[,]");
+                while (pch != NULL)
+                {
+
+                    mch[i] = atoi(pch);
+                    pch = strtok(NULL, "[,]");
+                    i++;
+                }
+
+                fscanf(fp, "%s\n", str);
+
+                pch = strtok(str, "(,)");
+                while (pch != NULL)
+                {
+
+                    time[t] = atoi(pch);
+                    pch = strtok(NULL, "(,)");
+                    t++;
+                }
+                for (int z = 0; z < i; z++)
+                {
+                    machineObj = NULL;
+                    machineObj = CreateMachine(mch[z], time[z]);
+                    // process = InsertMachineOperationProcess(process, machineObj, opFile, prsFile);
+                    job = CreateNodoBtree(job, prsFile, opFile, mch[z], time[z]);
+                }
+            }
+    }
+    return job;
 }

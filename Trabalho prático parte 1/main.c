@@ -130,11 +130,10 @@ int main()
 			break;
 		
 		case 12:
-			job = CreateNodoBtree(job, 1,100,101);
-						job = CreateNodoBtree(job, 2,200,201);
-									job = CreateNodoBtree(job, 3,300,301);
-												job = CreateNodoBtree(job, 4,400,401);
-
+			job = CreateNodoBtree(job, 1,1,100,101);
+						job = CreateNodoBtree(job,2, 2,200,201);
+									job = CreateNodoBtree(job,2, 3,300,301);
+												job = CreateNodoBtree(job,100, 4,400,401);
 
 
 			break;
@@ -142,9 +141,11 @@ int main()
 			preorder(job);
 			break;
 case 14:Job ola=NULL;
-ola=consultar(job,4);
-printf( "\nola %d",ola->op->noperation);
-			
+ola=SerchJob(job,100);
+printf( "\nola %d",ola->prs->op->noperation);
+			break;
+			case 15:
+			job=ReadFileBtree(job);
 			break;
 		default:
 			break;
