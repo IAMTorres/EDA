@@ -80,11 +80,21 @@ int SumHigh(Process *process, int processSumHigh);
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
 
-Job SerchJob(Job job, int op);
-Job InsertOperationBtree(Operation *opObj, Job job, int op);
-Job CreateNodoBtree(Job job, int processId);
-void preorder(Job job);
-Job ReadFileBtree(Job job);
-Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int timeMachine);
+Job SerchJob(Job jobs, int op);
+Job InsertOperationBtree(Operation *opObj, Job jobs, int op);
+Job CreateNodoBtree(Job jobs, int processId);
+void preorder(Job jobs);
+Job ReadFileBtree(Job jobs);
+Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine);
 
-Job WriteFileBtree(Job job);
+Job WriteFileBtree(Job jobs);
+
+
+
+
+
+
+
+
+
+

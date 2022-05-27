@@ -25,7 +25,7 @@ int main()
 	//	Showlist(process);
 	int option = 0;
 	Process *process = NULL;
-	Job job = NULL;
+	Job jobs = NULL;
 	do
 	{
 		int nprocess = 1;
@@ -130,30 +130,30 @@ int main()
 			break;
 
 		case 12:
-			job = NULL;
-			job = InserNewDataTree(job, 1, 1, 100, 101);
-			job = InserNewDataTree(job, 2, 1, 102, 102);
-			job = InserNewDataTree(job, 2, 2, 220, 201);
-			job = InserNewDataTree(job, 3, 1, 200, 201);
-			job = InserNewDataTree(job, 3, 1, 200, 201);
-			job = InserNewDataTree(job, 1, 2, 300, 501);
-			// job = InserNewDataTree(job, 2, 3, 300, 301);
-			// job = InserNewDataTree(job, 100, 4, 400, 401);
+			jobs = NULL;
+			jobs = InserNewDataTree(jobs, 1, 1, 100, 101);
+			jobs = InserNewDataTree(jobs, 2, 1, 102, 102);
+			jobs = InserNewDataTree(jobs, 2, 2, 220, 201);
+			jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
+			jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
+			jobs = InserNewDataTree(jobs, 1, 2, 300, 501);
+			// jobs = InserNewDataTree(jobs, 2, 3, 300, 301);
+			// jobs = InserNewDataTree(jobs, 100, 4, 400, 401);
 
 			break;
 		case 13:
-			preorder(job);
+			preorder(jobs);
 			break;
 		case 14:
 			Job ola = NULL;
-			ola = SerchJob(job, 100);
+			ola = SerchJob(jobs, 100);
 			printf("\nola %d", ola->prs->op->noperation);
 			break;
 		case 15:
-			job = ReadFileBtree(job);
+			jobs = ReadFileBtree(jobs);
 			break;
 		case 16:
-			job = WriteFileBtree(job);
+			jobs = WriteFileBtree(jobs);
 			break;
 		default:
 			break;

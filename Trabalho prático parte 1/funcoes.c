@@ -760,11 +760,11 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
-Job CreateNodoBtree(Job job, int processId) // entra aqui apos ter recebido o op
+Job CreateNodoBtree(Job jobs, int processId) // entra aqui apos ter recebido o op
 {
     /// Job novo;
     Process *prs = CreateProcessPlan(processId);
-    if (job == NULL)
+    if (jobs == NULL)
     {
 
         Job novo = (Job)calloc(1, sizeof(Job));
@@ -777,33 +777,33 @@ Job CreateNodoBtree(Job job, int processId) // entra aqui apos ter recebido o op
             return (novo);
         }
         else
-            return (job);
+            return (jobs);
 
-    } // printf( "\n ola %d",i);//printf( "\nola %d",job->prs->op->noperation);
-    else if (processId < job->prs->npp)
+    } // printf( "\n ola %d",i);//printf( "\nola %d",jobs->prs->op->noperation);
+    else if (processId < jobs->prs->npp)
     {
-        job->right = CreateNodoBtree(job->right, processId);
-        return (job);
+        jobs->right = CreateNodoBtree(jobs->right, processId);
+        return (jobs);
     }
     else
     {
-        job->left = CreateNodoBtree(job->left, processId);
-        return (job);
+        jobs->left = CreateNodoBtree(jobs->left, processId);
+        return (jobs);
     }
 }
 
-Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int timeMachine)
+Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine)
 {
 
     Operation *op = CreateOperation(operationId);
     Machine *mch = CreateMachine(machineId, timeMachine);
 
-    Job jobAux = SerchJob(job, processId);
+    Job jobAux = SerchJob(jobs, processId);
 
     if (jobAux == NULL)
     {
-        job = CreateNodoBtree(job, processId);
-        jobAux = SerchJob(job, processId);
+        jobs = CreateNodoBtree(jobs, processId);
+        jobAux = SerchJob(jobs, processId);
         jobAux->prs->op = op;
         ;
         jobAux->prs->op->machine = mch;
@@ -826,21 +826,21 @@ Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int
         }
     }
 
-    return job;
+    return jobs;
 } /*
- Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int timeMachine)
+ Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine)
  {
 
      Operation *op = CreateOperation(operationId);
      Machine *mch = CreateMachine(machineId, timeMachine);
 
-     Job jobAux = SerchJob(job, processId);
+     Job jobAux = SerchJob(jobs, processId);
 
      if (jobAux == NULL)
      {
-         job = CreateNodoBtree(job, processId);
-         job->prs->op = op;
-         job->prs->op->machine = mch;
+         jobs = CreateNodoBtree(jobs, processId);
+         jobs->prs->op = op;
+         jobs->prs->op->machine = mch;
      }
      else
      {
@@ -851,20 +851,20 @@ Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int
          }
          else
          {
-             InsertOperationProcess(op, job->prs, processId);
+             InsertOperationProcess(op, jobs->prs, processId);
          }
          printf("operationId %d", operationId);
      }
 
-     return job;
+     return jobs;
  }*/
 
-void preorder(Job job)
+void preorder(Job jobs)
 {
-    if (job != NULL)
+    if (jobs != NULL)
     {
-        printf("\n\n\n\nProcess%d", job->prs->npp);
-        Operation *opAux = job->prs->op;
+        printf("\n\n\n\nProcess%d", jobs->prs->npp);
+        Operation *opAux = jobs->prs->op;
         while (opAux != NULL)
         {
             printf("\n Operacao:%d", opAux->noperation);
@@ -878,19 +878,19 @@ void preorder(Job job)
             opAux = opAux->next;
         }
 
-        preorder(job->right);
-        preorder(job->left);
+        preorder(jobs->right);
+        preorder(jobs->left);
     }
 }
-int altura(Job job)
+int altura(Job jobs)
 {
     int altEsq, altDir;
-    if (job == NULL)
+    if (jobs == NULL)
         return (0);
     else
     {
-        altEsq = altura(job->right);
-        altDir = altura(job->left);
+        altEsq = altura(jobs->right);
+        altDir = altura(jobs->left);
         if (altEsq > altDir)
             return (altEsq + 1);
         else
@@ -899,21 +899,21 @@ int altura(Job job)
 }
 
 // Consulta do endereço de memória
-Job SerchJob(Job job, int prs)
+Job SerchJob(Job jobs, int prs)
 {
-    while (job != NULL)
+    while (jobs != NULL)
     {
-        if (job->prs->npp == prs)
-            return (job);
-        else if (job->prs->npp < prs)
-            job = job->left;
+        if (jobs->prs->npp == prs)
+            return (jobs);
+        else if (jobs->prs->npp < prs)
+            jobs = jobs->left;
         else
-            job = job->right;
+            jobs = jobs->right;
     }
     return (NULL);
 }
 
-Job ReadFileBtree(Job job)
+Job ReadFileBtree(Job jobs)
 {
     Process *processObj = NULL;
     Process *process = NULL;
@@ -967,21 +967,59 @@ Job ReadFileBtree(Job job)
                     machineObj = NULL;
                     machineObj = CreateMachine(mch[z], time[z]);
                     // process = InsertMachineOperationProcess(process, machineObj, opFile, prsFile);
-                    job = InserNewDataTree(job, prsFile, opFile, mch[z], time[z]);
+                    jobs = InserNewDataTree(jobs, prsFile, opFile, mch[z], time[z]);
                 }
             }
     }
-    return job;
+    return jobs;
 }
 
-Job WriteFileBtree(Job job)
+FILE *PreOrderjob(Job jobs, FILE *fpwrite)
 {
-    Process *processObj = NULL;
-    Process *process = NULL;
-    Operation *operationObj = NULL;
-    Machine *machineObj = NULL;
+
+    if (jobs != NULL)
     {
-        FILE *fpwrite = fopen("btreewirte.txt", "w");
+        Operation *opAux = jobs->prs->op;
+        while (opAux != NULL)
+        {
+            fprintf(fpwrite, "%d\n", jobs->prs->npp);
+            fprintf(fpwrite, "%d\n", opAux->noperation);
+            Machine *mchAux = opAux->machine;
+            fprintf(fpwrite, "[");
+            while (mchAux != NULL)
+            {
+                fprintf(fpwrite, "%d", mchAux->pc);
+                mchAux = mchAux->next;
+                if (mchAux != NULL)
+                    fprintf(fpwrite, ",");
+            }
+            fprintf(fpwrite, "]\n");
+
+            mchAux = opAux->machine;
+            fprintf(fpwrite, "(");
+            while (mchAux != NULL)
+            {
+                fprintf(fpwrite, "%d", mchAux->time);
+                mchAux = mchAux->next;
+                if (mchAux != NULL)
+                    fprintf(fpwrite, ",");
+            }
+            fprintf(fpwrite, ")\n");
+
+            opAux = opAux->next;
+        }
+
+        PreOrderjob(jobs->right, fpwrite);
+        PreOrderjob(jobs->left, fpwrite);
+    }
+    return fpwrite;
+}
+
+Job WriteFileBtree(Job jobs)
+{
+
+    {
+        FILE *fpwrite = fopen("btreewrite.txt", "w");
         int opFile;
         int prsFile;
         char str[50];
@@ -990,35 +1028,18 @@ Job WriteFileBtree(Job job)
         int time[TAM];
         int i = 0;
         int t = 0;
-
-        if (fpwrite != NULL)
-            while (!feof(fpwrite))
-            {
-
-                fprintf(fpwrite, "%d\n", job->prs->npp);
-                Operation *opAux = job->prs->op;
-                while (opAux != NULL)
-                {
-                    fprintf(fpwrite, "%d\n", opAux->noperation);
-                    Machine *mchAux = opAux->machine;
-                    fprintf(fpwrite, "[");
-                    while (mchAux != NULL)
-                    {
-                        fprintf(fpwrite, "%d", mchAux->pc);
-                        mchAux = mchAux->next;
-                        if (mchAux = NULL)
-                            fprintf(fpwrite, "]");
-                        else
-                            fprintf(fpwrite, ",");
-                    }
-                    opAux = opAux->next;
-                }
-
-                preorder(job->right);
-                preorder(job->left);
-            }
-
-        fclose(fpwrite);
+        while (!feof(fpwrite))
+        {
+            printf("ASDASD");
+            fpwrite = PreOrderjob(jobs, fpwrite);
+            fclose(fpwrite);
+        }
     }
-    return job;
+    return jobs;
+}
+
+Job EditJob(Job jobs, int operation)
+{
+    SerchJob(jobs,operation)
+
 }
