@@ -41,7 +41,7 @@ typedef struct _job
 	Process *prs;
 	struct _job *left;
 	struct _job *right;
-} *Job;
+} * Job;
 
 //..
 Process *CreateProcessPlan(int numberProcess);
@@ -80,10 +80,11 @@ int SumHigh(Process *process, int processSumHigh);
 int CountOperation(Operation *operation);
 int ShowProcess(Process *process);
 
-
 Job SerchJob(Job job, int op);
 Job InsertOperationBtree(Operation *opObj, Job job, int op);
-Job CreateNodoBtree(Job job,int processId, int operationId,int machineId, int timeMachine);
+Job CreateNodoBtree(Job job, int processId);
 void preorder(Job job);
 Job ReadFileBtree(Job job);
+Job InserNewDataTree(Job job, int processId, int operationId, int machineId, int timeMachine);
 
+Job WriteFileBtree(Job job);

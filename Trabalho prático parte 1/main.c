@@ -128,24 +128,32 @@ int main()
 		case 11:
 			ShowAll(process, 1, 1, 0);
 			break;
-		
-		case 12:
-			job = CreateNodoBtree(job, 1,1,100,101);
-						job = CreateNodoBtree(job,2, 2,200,201);
-									job = CreateNodoBtree(job,2, 3,300,301);
-												job = CreateNodoBtree(job,100, 4,400,401);
 
+		case 12:
+			job = NULL;
+			job = InserNewDataTree(job, 1, 1, 100, 101);
+			job = InserNewDataTree(job, 2, 1, 102, 102);
+			job = InserNewDataTree(job, 2, 2, 220, 201);
+			job = InserNewDataTree(job, 3, 1, 200, 201);
+			job = InserNewDataTree(job, 3, 1, 200, 201);
+			job = InserNewDataTree(job, 1, 2, 300, 501);
+			// job = InserNewDataTree(job, 2, 3, 300, 301);
+			// job = InserNewDataTree(job, 100, 4, 400, 401);
 
 			break;
-			case 13:
+		case 13:
 			preorder(job);
 			break;
-case 14:Job ola=NULL;
-ola=SerchJob(job,100);
-printf( "\nola %d",ola->prs->op->noperation);
+		case 14:
+			Job ola = NULL;
+			ola = SerchJob(job, 100);
+			printf("\nola %d", ola->prs->op->noperation);
 			break;
-			case 15:
-			job=ReadFileBtree(job);
+		case 15:
+			job = ReadFileBtree(job);
+			break;
+		case 16:
+			job = WriteFileBtree(job);
 			break;
 		default:
 			break;

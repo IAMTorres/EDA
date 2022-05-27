@@ -7,13 +7,11 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "c:/Users/gonin/Desktop/2 ano/2 semestre/EDA/Trabalho prático parte 1",
-      "environment": [],
-      "program": "c:/Users/gonin/Desktop/2 ano/2 semestre/EDA/Trabalho prático parte 1/build/Debug/outDebug",
-      "internalConsoleOptions": "openOnSessionStart",
+      "externalConsole": false,
+      "cwd": "/home/torres/Desktop/EAD/Trabalho prático parte 1",
+      "program": "/home/torres/Desktop/EAD/Trabalho prático parte 1/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
-      "console": "integratedTerminal",
+      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
