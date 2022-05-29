@@ -88,7 +88,8 @@ Job ReadFileBtree(Job jobs);
 Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine);
 
 Job WriteFileBtree(Job jobs);
-Job EditJob(Job jobs,int process, int operation,int machine, int time,int machineWantSub);
+Machine *ObjToEdit(Job jobs,int process, int operation,int machine, int time,int machineWantSub);
+Machine *ObjEdit(Machine *machineObj, int machine, int time);
 
 
 

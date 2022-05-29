@@ -1030,7 +1030,7 @@ Job WriteFileBtree(Job jobs)
         int t = 0;
         while (!feof(fpwrite))
         {
-            printf("ASDASD");
+           
             fpwrite = PreOrderjob(jobs, fpwrite);
             fclose(fpwrite);
         }
@@ -1038,15 +1038,19 @@ Job WriteFileBtree(Job jobs)
     return jobs;
 }
 
-Job EditJob(Job jobs,int process, int operation,int machine, int time,int machineWantSub)
+Machine *ObjToEdit(Job jobs, int process, int operation, int machine, int time, int machineWantSub)
 {
-    Job jobAux=NULL;
-    jobAux=SerchJob(jobs,process);
+    Job jobAux = NULL;
+    jobAux = SerchJob(jobs, process);
 
-Operation *opObj=SearchOperation(jobAux->prs->op,operation);
-Machine *machineObj=SearchMachine(opObj->machine,machineWantSub);
-machineObj->pc=machine;
-machineObj->time=time;
-
+    Operation *opObj = SearchOperation(jobAux->prs->op, operation);
+    Machine *machineObj = SearchMachine(opObj->machine, machineWantSub);
+    return machineObj;
 }
- 
+
+Machine *ObjEdit(Machine *machineObj, int machine, int time)
+{
+    machineObj->pc = machine;
+    machineObj->time = time;
+    return machineObj;
+}

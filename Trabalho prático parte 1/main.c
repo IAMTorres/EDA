@@ -171,13 +171,15 @@ int main()
 			scanf("%d", &operationSubBtree);
 
 			printf("\nInsira a maquina a alterar\nOperação:");
-			scanf("%d", &operationSubBtree);
-			jobs = EditJob(jobs, processSubBtree, operationSubBtree, machineSubBtree, timeSub, machineWantSubBtree);
+			scanf("%d", &machineWantSubBtree);
+			Machine *mchObjBtreeEdit = ObjToEdit(jobs, processSubBtree, operationSubBtree, machineSubBtree, timeSub, machineWantSubBtree);
 
 			printf("Novo numero de maquina:\nMaquina:");
 			scanf("%d", &mchSub);
 			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
 			scanf("%d", &timeSub);
+			mchObjBtreeEdit = ObjEdit(mchObjBtreeEdit,mchSub,timeSub);
+
 			break;
 		default:
 			break;
