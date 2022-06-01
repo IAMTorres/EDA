@@ -1023,11 +1023,10 @@ Machine *ObjToEdit(Job jobs, int process, int operation, int machine, int time, 
     if (jobAux != NULL)
     {
         Operation *opObj = SearchOperation(jobAux->prs->op, operation);
-        Machine *machineObj = SearchMachine(opObj->machine, machineWantSub);   return machineObj;
+        Machine *machineObj = SearchMachine(opObj->machine, machineWantSub);
+        return machineObj;
     }
     return NULL;
-    
- 
 }
 
 Machine *ObjEdit(Machine *machineObj, int machine, int time)
@@ -1035,4 +1034,65 @@ Machine *ObjEdit(Machine *machineObj, int machine, int time)
     machineObj->pc = machine;
     machineObj->time = time;
     return machineObj;
+}
+
+Job DeleteNode(Job jobs, int valor)
+{
+    //árvore vazia ou enexistente
+    if (jobs == NULL)
+        return NULL;
+
+    if (jobs->prs->npp > valor)
+        jobs->left = DeleteNode(jobs->left, valor);
+    else if (jobs->prs->npp < valor)
+    {
+        jobs->right = DeleteNode(jobs->right, valor);
+    }
+    else
+    {
+        jobs = DeleteCurrentNode(jobs);
+    }
+    return jobs;
+}
+
+Job DeleteCurrentNode(Job job)
+{
+    Job aux;
+    if (job == NULL)
+        return NULL; 
+
+    if (job->left == NULL && job->right == NULL)
+    { 
+        DestroyNode(&job);
+        return NULL;
+    }
+    else if (job->left == NULL)
+    { 
+        aux = job;
+        job = job->right;
+        DestroyNode(&aux);
+    }
+    else
+    {
+        if (job->right == NULL)
+        { // só com sub-arvore esquerda
+            aux = job;
+            job = job->left;
+            DestroyNode(&aux);
+        }
+        else
+        {
+
+            job->prs = FindMin(job->right);
+            job->right = DeleteNode(job->right, job);
+        }
+    }
+    return job;
+}
+Job FindMin(Job jobs)
+{
+    if (jobs->left == NULL)
+        return jobs;
+    else
+        return (FindMin(jobs->left));
 }

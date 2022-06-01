@@ -22,6 +22,9 @@ int main()
 	int prsSub;
 	int mchSub;
 	int timeSub;
+	int opIst;
+	int timeIst;
+	int pcIst;
 	//	Showlist(process);
 	int option = 0;
 	Process *process = NULL;
@@ -33,6 +36,8 @@ int main()
 	int timeSubBtree;
 	int machineSubBtree;
 	int machineWantSubBtree;
+	Process *prs = CreateProcessPlan(1);
+	process = InsertProcessPlan(prs, process);
 	do
 	{
 		int nprocess = 1;
@@ -43,7 +48,6 @@ int main()
 		printf("\nInsira a opcao:\nOption:");
 		scanf("%d", &option);
 
-		
 		switch (option)
 		{
 		case 300:
@@ -51,10 +55,22 @@ int main()
 			Showlist(process);
 			break;
 		case 1:
-
 			/*process = ReadFile(process);*/
 			// Lista ligada vazia
-			process = InsertData(process);
+			// process = InsertData(process);
+			printf("Insira a operação adicionar");
+			scanf("%d", &opIst);
+			printf("Insira a maquina adicionar");
+			scanf("%d", &pcIst);
+			printf("Insira a tempo adicionar");
+			scanf("%d", &timeIst);
+
+			Operation *operationObj = CreateOperation(opIst);
+			process = InsertOperationProcess(operationObj, process, 1);
+
+			Machine *machineObj = CreateMachine(pcIst, timeIst);
+			process = InsertMachineOperationProcess(process, machineObj, opIst, 1);
+
 			Showlist(process);
 			break;
 		case 2:
@@ -139,16 +155,25 @@ int main()
 			break;
 
 		case 12:
-			jobs = NULL;
-			jobs = InserNewDataTree(jobs, 1, 1, 100, 101);
-			jobs = InserNewDataTree(jobs, 2, 1, 102, 102);
-			jobs = InserNewDataTree(jobs, 2, 2, 220, 201);
-			jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
-			jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
-			jobs = InserNewDataTree(jobs, 1, 2, 300, 501);
-			// jobs = InserNewDataTree(jobs, 2, 3, 300, 301);
-			// jobs = InserNewDataTree(jobs, 100, 4, 400, 401);
+			int jobIst;
+			/*
+				jobs = InserNewDataTree(jobs, 1, 1, 100, 101);
+				jobs = InserNewDataTree(jobs, 2, 1, 102, 102);
+				jobs = InserNewDataTree(jobs, 2, 2, 220, 201);
+				jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
+				jobs = InserNewDataTree(jobs, 3, 1, 200, 201);
+				jobs = InserNewDataTree(jobs, 1, 2, 300, 501);
+				*/
+			printf("Insira a operação adicionar");
+			scanf("%d", &jobIst);
+			printf("Insira a operação adicionar");
+			scanf("%d", &opIst);
+			printf("Insira a maquina adicionar");
+			scanf("%d", &pcIst);
+			printf("Insira a tempo adicionar");
+			scanf("%d", &timeIst);
 
+			jobs = InserNewDataTree(jobs, jobIst, opIst, pcIst, timeIst);
 			break;
 		case 13:
 			preorder(jobs);
@@ -166,13 +191,13 @@ int main()
 			break;
 		case 17:
 
-			printf("\nInsira o processo a alterar\nProcesso:");
+			printf("\nInsira o processo a alterar:\nProcesso:");
 			scanf("%d", &processSubBtree);
 
-			printf("\nInsira a operação a alterar\nOperação:");
+			printf("\nInsira a operação a alterar:\nOperação:");
 			scanf("%d", &operationSubBtree);
 
-			printf("\nInsira a maquina a alterar\nOperação:");
+			printf("\nInsira a maquina a alterar:\nOperação:");
 			scanf("%d", &machineWantSubBtree);
 			Machine *mchObjBtreeEdit = ObjToEdit(jobs, processSubBtree, operationSubBtree, machineSubBtree, timeSub, machineWantSubBtree);
 
@@ -180,9 +205,16 @@ int main()
 			scanf("%d", &mchSub);
 			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
 			scanf("%d", &timeSub);
-			mchObjBtreeEdit = ObjEdit(mchObjBtreeEdit,mchSub,timeSub);
+			mchObjBtreeEdit = ObjEdit(mchObjBtreeEdit, mchSub, timeSub);
 
 			break;
+		case 18:
+			int elem;
+			printf("A eliminar %d:");
+			scanf("%d", &elem);
+			jobs = DeleteNode(jobs, elem);
+			break;
+
 		default:
 			break;
 		}

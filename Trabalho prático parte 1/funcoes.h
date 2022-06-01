@@ -91,9 +91,8 @@ Job WriteFileBtree(Job jobs);
 Machine *ObjToEdit(Job jobs,int process, int operation,int machine, int time,int machineWantSub);
 Machine *ObjEdit(Machine *machineObj, int machine, int time);
 
-
-
-
+void deleteTree(Job jobs);
+Job DeleteNode(Job jobs, int valor);
 
 
 
