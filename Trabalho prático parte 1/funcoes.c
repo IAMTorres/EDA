@@ -767,6 +767,13 @@ int SumHigh(Process *process, int processMeanHigh)
 }
 #pragma endregion
 
+/**
+ * @brief Cria o nodo na arvore
+ *
+ * @param jobs
+ * @param processId
+ * @return Job
+ */
 Job CreateNodoBtree(Job jobs, int processId) // entra aqui apos ter recebido o op
 {
     /// Job novo;
@@ -798,7 +805,13 @@ Job CreateNodoBtree(Job jobs, int processId) // entra aqui apos ter recebido o o
         return (jobs);
     }
 }
-
+/**
+ * @brief Insere dados no nodo criado
+ *
+ * @param jobs
+ * @param processId
+ * @return Job
+ */
 Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine)
 {
 
@@ -834,7 +847,14 @@ Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, in
 
     return jobs;
 }
-void preorder(Job jobs)
+
+/**
+ * @brief Cria o nodo na arvore
+ *
+ * @param jobs
+ * @return int
+ */
+int preorder(Job jobs)
 {
     if (jobs != NULL)
     {
@@ -856,7 +876,14 @@ void preorder(Job jobs)
         preorder(jobs->right);
         preorder(jobs->left);
     }
+    return 1;
 }
+/**
+ * @brief Vê altura da arvore
+ *
+ * @param jobs
+ * @return int
+ */
 int altura(Job jobs)
 {
     int altEsq, altDir;
@@ -875,7 +902,13 @@ int altura(Job jobs)
     return 0;
 }
 
-// Consulta do endereço de memória
+/**
+ * @brief Pesquisa nodo da arvore para retornar objeto
+ *
+ * @param jobs
+ * @param prs
+ * @return int
+ */
 Job SerchJob(Job jobs, int prs)
 {
     while (jobs != NULL)
@@ -890,6 +923,12 @@ Job SerchJob(Job jobs, int prs)
     return (NULL);
 }
 
+/**
+ * @brief Lê ficheiro
+ *
+ * @param jobs
+ * @return jib
+ */
 Job ReadFileBtree(Job jobs)
 {
     Process *processObj = NULL;
@@ -951,6 +990,7 @@ Job ReadFileBtree(Job jobs)
     return jobs;
 }
 
+
 FILE *PreOrderjob(Job jobs, FILE *fpwrite)
 {
 
@@ -991,7 +1031,12 @@ FILE *PreOrderjob(Job jobs, FILE *fpwrite)
     }
     return fpwrite;
 }
-
+/**
+ * @brief Escreve ficheiro
+ *
+ * @param jobs
+ * @return job
+ */
 Job WriteFileBtree(Job jobs)
 {
 
@@ -1014,7 +1059,17 @@ Job WriteFileBtree(Job jobs)
     }
     return jobs;
 }
-
+/**
+ * @brief Retorna objeto para editar
+ *
+ * @param jobs
+ * @param process
+ * @param operation
+ * @param machine
+ * @param time
+ * @param machineWantSub 
+ * @return job
+ */
 Machine *ObjToEdit(Job jobs, int process, int operation, int machine, int time, int machineWantSub)
 {
     Job jobAux = NULL;
@@ -1028,7 +1083,12 @@ Machine *ObjToEdit(Job jobs, int process, int operation, int machine, int time, 
     }
     return NULL;
 }
-
+/**
+ * @brief Altera valor de objeto
+ *
+ * @param jobs
+ * @return jib
+ */
 Machine *ObjEdit(Machine *machineObj, int machine, int time)
 {
     machineObj->pc = machine;
@@ -1036,6 +1096,12 @@ Machine *ObjEdit(Machine *machineObj, int machine, int time)
     return machineObj;
 }
 
+/**
+ * @brief Elimina nodo
+ *
+ * @param jobs
+ * @return jib
+ */
 Job DeleteNode(Job jobs, int valor)
 {
     //árvore vazia ou enexistente
@@ -1059,15 +1125,15 @@ Job DeleteCurrentNode(Job job)
 {
     Job aux;
     if (job == NULL)
-        return NULL; 
+        return NULL;
 
     if (job->left == NULL && job->right == NULL)
-    { 
+    {
         DestroyNode(&job);
         return NULL;
     }
     else if (job->left == NULL)
-    { 
+    {
         aux = job;
         job = job->right;
         DestroyNode(&aux);
