@@ -168,6 +168,7 @@ Process *SearchProcessPlan(Process *prs, int nProcess)
 
         auxPrs = auxPrs->next;
     }
+    return NULL;
 }
 /**
  * @brief Retorna o endereço de memoria de Operation
@@ -207,6 +208,7 @@ Machine *SearchMachine(Machine *mch, int nMachine)
         }
         auxMch = auxMch->next;
     }
+    return NULL;
 }
 /**
  * @brief Altera os valores de machine
@@ -275,6 +277,8 @@ Process *InsertProcessPlan(Process *prsObj, Process *process)
     }
     else
         return (process);
+
+    return NULL;
 }
 
 #pragma endregion
@@ -356,6 +360,7 @@ int Show(Process *process, int prsSub, int opSub, int showPrs, int showOp, int s
 
         auxPrs = auxPrs->next;
     }
+    return 0;
 }
 
 /**
@@ -399,6 +404,7 @@ int ShowAll(Process *process, int showPrs, int showOp, int showMachine)
         }
         auxPrs = auxPrs->next;
     }
+    return 0;
 }
 
 #pragma region OP
@@ -488,6 +494,7 @@ Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
         }
     }
     prs->op = op;
+    return NULL;
 }
 
 #pragma endregion
@@ -805,7 +812,6 @@ Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, in
         jobs = CreateNodoBtree(jobs, processId);
         jobAux = SerchJob(jobs, processId);
         jobAux->prs->op = op;
-        ;
         jobAux->prs->op->machine = mch;
     }
     else
@@ -827,38 +833,7 @@ Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, in
     }
 
     return jobs;
-} /*
- Job InserNewDataTree(Job jobs, int processId, int operationId, int machineId, int timeMachine)
- {
-
-     Operation *op = CreateOperation(operationId);
-     Machine *mch = CreateMachine(machineId, timeMachine);
-
-     Job jobAux = SerchJob(jobs, processId);
-
-     if (jobAux == NULL)
-     {
-         jobs = CreateNodoBtree(jobs, processId);
-         jobs->prs->op = op;
-         jobs->prs->op->machine = mch;
-     }
-     else
-     {
-         Operation *opVerific = SearchOperation(jobAux->prs->op, operationId);
-         if (opVerific != NULL)
-         {
-             InsertMachineOperationProcess(jobAux->prs, mch, operationId, processId);
-         }
-         else
-         {
-             InsertOperationProcess(op, jobs->prs, processId);
-         }
-         printf("operationId %d", operationId);
-     }
-
-     return jobs;
- }*/
-
+}
 void preorder(Job jobs)
 {
     if (jobs != NULL)
@@ -896,6 +871,8 @@ int altura(Job jobs)
         else
             return (altDir + 1);
     }
+
+    return 0;
 }
 
 // Consulta do endereço de memória
@@ -1030,7 +1007,7 @@ Job WriteFileBtree(Job jobs)
         int t = 0;
         while (!feof(fpwrite))
         {
-           
+
             fpwrite = PreOrderjob(jobs, fpwrite);
             fclose(fpwrite);
         }
@@ -1041,11 +1018,16 @@ Job WriteFileBtree(Job jobs)
 Machine *ObjToEdit(Job jobs, int process, int operation, int machine, int time, int machineWantSub)
 {
     Job jobAux = NULL;
-    jobAux = SerchJob(jobs, process);
 
-    Operation *opObj = SearchOperation(jobAux->prs->op, operation);
-    Machine *machineObj = SearchMachine(opObj->machine, machineWantSub);
-    return machineObj;
+    jobAux = SerchJob(jobs, process);
+    if (jobAux != NULL)
+    {
+        Operation *opObj = SearchOperation(jobAux->prs->op, operation);
+        Machine *machineObj = SearchMachine(opObj->machine, machineWantSub);   return machineObj;
+    }
+    return NULL;
+    
+ 
 }
 
 Machine *ObjEdit(Machine *machineObj, int machine, int time)

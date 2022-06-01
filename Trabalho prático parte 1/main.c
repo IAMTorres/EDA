@@ -42,6 +42,8 @@ int main()
 
 		printf("\nInsira a opcao:\nOption:");
 		scanf("%d", &option);
+
+		
 		switch (option)
 		{
 		case 300:
